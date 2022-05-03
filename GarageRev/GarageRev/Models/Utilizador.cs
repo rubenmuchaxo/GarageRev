@@ -1,6 +1,39 @@
-﻿namespace GarageRev.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace GarageRev.Models
 {
+    /// <summary>
+    /// Descrição de cada Utilizador
+    /// </summary>
     public class Utilizador
     {
+        /// <summary>
+        /// Identificador do Utilizador
+        /// </summary>
+        [Key]
+        public int Id { get; set; }
+        /// <summary>
+        /// Nome do Utilizador
+        /// </summary>
+        public string Nome { get; set; }
+        /// <summary>
+        /// email do Utilizador
+        /// </summary>
+        public string email { get; set; }
+        /// <summary>
+        /// Nacionalidade do Utilizador
+        /// </summary>
+        public string Nacionalidade { get; set; }
+        /// <summary>
+        /// Idade do Utilizador
+        /// </summary>
+        public int Idade { get; set; }
+        /// <summary>
+        /// Carro favorito do Utilizador
+        /// </summary>
+        public string CarroFav { get; set; }
+
+
+
     }
 }
