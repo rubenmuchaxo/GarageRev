@@ -16,6 +16,7 @@ namespace GarageRev.Models
         /// <summary>
         /// Conteudo da Review
         /// </summary>
+        [Required]
         public string Comentario { get; set; }
 
 

@@ -15,10 +15,12 @@ namespace GarageRev.Models
         /// <summary>
         /// Nome do Utilizador
         /// </summary>
+        [Required]
         public string Nome { get; set; }
         /// <summary>
         /// email do Utilizador
         /// </summary>
+        [Required]
         public string email { get; set; }
         /// <summary>
         /// Nacionalidade do Utilizador
@@ -32,8 +34,6 @@ namespace GarageRev.Models
         /// Carro favorito do Utilizador
         /// </summary>
         public string CarroFav { get; set; }
-
-
 
     }
 }

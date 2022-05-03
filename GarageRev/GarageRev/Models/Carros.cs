@@ -35,7 +35,7 @@ namespace GarageRev.Models
         /// <summary>
         /// Cilindrada, em cm3, de cada Carro
         /// </summary>
-        public int Cilindrada { get; set; }
+        public string Cilindrada { get; set; }
         /// <summary>
         /// Potencia, em cv, de cada Carro
         /// </summary>
@@ -47,15 +47,11 @@ namespace GarageRev.Models
         /// <summary>
         /// Numero de Portas de cada Carro
         /// </summary>
-        public int Nportas { get; set; }
+        public string Nportas { get; set; }
         /// <summary>
         /// Fotografias de cada carro
         /// </summary>
         public string Photo { get; set; }
-
-        [ForeignKey(nameof(Animal))]
-        public int AnimalFK { get; set; }
-        public Animal Animal { get; set; }
 
     }
 }
