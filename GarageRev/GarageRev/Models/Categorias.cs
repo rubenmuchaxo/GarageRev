@@ -16,6 +16,7 @@ namespace GarageRev.Models
         /// </summary>
         public string NomeCat { get; set; }
 
+        public ICollection<Carros> Carros { get; set; }
 
     }
 }

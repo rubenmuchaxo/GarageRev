@@ -21,7 +21,7 @@ namespace GarageRev.Models
         /// email do Utilizador
         /// </summary>
         [Required]
-        public string email { get; set; }
+        public string Email { get; set; }
         /// <summary>
         /// Nacionalidade do Utilizador
         /// </summary>

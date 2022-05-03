@@ -7,6 +7,12 @@ namespace GarageRev.Models
     /// </summary>
     public class Carros
     {
+
+        public Carros()
+        {
+            Fotografias = new HashSet<Fotografias>();
+        }
+
         /// <summary>
         /// Identificador de cada Carro
         /// </summary>
@@ -51,7 +57,10 @@ namespace GarageRev.Models
         /// <summary>
         /// Fotografias de cada carro
         /// </summary>
-        public string Photo { get; set; }
+        public string Fotografia { get; set; }
+
+        public ICollection<Fotografias> Fotografias { get; set; }
+        public ICollection<Categorias> Categorias { get; set; }
 
     }
 }

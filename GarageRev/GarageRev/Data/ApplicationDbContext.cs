@@ -9,5 +9,10 @@ namespace GarageRev.Data
             : base(options)
         {
         }
+
+        //define table on the database
+        public DbSet<GarageRev.Models.Carros> Carros { get; set; }
+        public DbSet<GarageRev.Models.Utilizadores> Utilizadores { get; set; }
+
     }
 }
