@@ -5,7 +5,7 @@ namespace GarageRev.Models
     /// <summary>
     /// Descrição de cada Utilizador
     /// </summary>
-    public class Utilizador
+    public class Utilizadores
     {
         /// <summary>
         /// Identificador do Utilizador

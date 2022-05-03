@@ -5,7 +5,7 @@ namespace GarageRev.Models
     /// <summary>
     /// Descrição de cada Carro
     /// </summary>
-    public class Carro
+    public class Carros
     {
         /// <summary>
         /// Identificador de cada Carro

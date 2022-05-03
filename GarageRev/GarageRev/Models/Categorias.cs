@@ -1,20 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 namespace GarageRev.Models
 {
     /// <summary>
-    /// Descrição de cada Fotografia
+    /// Descrição de cada Categoria
     /// </summary>
-    public class Fotografia
+    public class Categorias
     {
         /// <summary>
-        /// Identificador de cada Fotografia
+        /// identificador de cada Categoria
         /// </summary>
         [Key]
         public int Id { get; set; }
         /// <summary>
-        /// Caminho de cada Fotografia
+        /// Nome de cada Categoria
         /// </summary>
-        public string FotoPath { get; set; }
+        public string NomeCat { get; set; }
+
+
     }
 }
