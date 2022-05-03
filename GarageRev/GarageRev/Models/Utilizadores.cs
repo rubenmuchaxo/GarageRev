@@ -29,11 +29,11 @@ namespace GarageRev.Models
         /// <summary>
         /// Idade do Utilizador
         /// </summary>
-        public int Idade { get; set; }
+        public DateOnly DataNascimento{ get; set; }
         /// <summary>
         /// Carro favorito do Utilizador
         /// </summary>
         public string CarroFav { get; set; }
-
+        public ICollection<Reviews> Reviews { get; set; }
     }
 }

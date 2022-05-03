@@ -19,13 +19,12 @@ namespace GarageRev.Models
         [Required]
         public string Comentario { get; set; }
 
-
-        [ForeignKey(nameof(Utilizadores))]
-        public int UtilizadoresFK { get; set; }
+        [ForeignKey(nameof(Utilizador))]
+        public int UtilizadorFK { get; set; }
         public Utilizadores Utilizador { get; set; }
 
-        [ForeignKey(nameof(Carros))]
-        public int CarrosFK { get; set; }
+        [ForeignKey(nameof(Carro))]
+        public int CarroFK { get; set; }
         public Carros Carro { get; set; }
 
 
