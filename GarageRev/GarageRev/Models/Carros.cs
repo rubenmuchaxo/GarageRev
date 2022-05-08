@@ -22,38 +22,51 @@ namespace GarageRev.Models
         /// <summary>
         /// Marca de cada carro
         /// </summary>
+        [Required]
         public string Marca { get; set; }
         /// <summary>
         /// Modelo de cada carro
         /// </summary>
+        [Required]
         public string Modelo { get; set; }
         /// <summary>
         /// Versão de cada Carro
         /// </summary>
+        [Required]
         public string Versão { get; set; }
         /// <summary>
         /// Tipo de Combustivel de cada Carro
         /// </summary>
+        [Required]
+        [Display(Name = "Combustível")]
         public string Combustivel { get; set; }
         /// <summary>
         /// Ano de fabrico de cada Carro
         /// </summary>
+        [Required]
         public int Ano { get; set; }
         /// <summary>
         /// Cilindrada, em cm3, de cada Carro
         /// </summary>
+        [Required]
         public int Cilindrada { get; set; }
         /// <summary>
         /// Potencia, em cv, de cada Carro
         /// </summary>
+        [Required]
+        [Display(Name = "Potência")]
         public int Potencia { get; set; }
         /// <summary>
         /// Tipo de Caixa de cada Carro
         /// </summary>
+        [Required]
+        [Display(Name = "Tipo de Caixa")]
         public string TipoCaixa { get; set; }
         /// <summary>
         /// Numero de Portas de cada Carro
         /// </summary>
+        [Required]
+        [Display(Name = "Número de Portas")]
         public string Nportas { get; set; }
         /// <summary>
         /// Fotografias de cada carro
