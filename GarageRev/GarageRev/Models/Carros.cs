@@ -12,6 +12,7 @@ namespace GarageRev.Models
         {
             Fotografias = new HashSet<Fotografias>();
             Categorias = new HashSet<Categorias>();
+            Reviews = new HashSet<Reviews>();
         }
 
         /// <summary>

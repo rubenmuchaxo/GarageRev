@@ -6,6 +6,10 @@ namespace GarageRev.Models
     /// </summary>
     public class Categorias
     {
+        public Categorias()
+        {
+            Carros = new HashSet<Carros>();
+        }
         /// <summary>
         /// identificador de cada Categoria
         /// </summary>

@@ -26,9 +26,5 @@ namespace GarageRev.Models
         [ForeignKey(nameof(Carro))]
         public int CarroFK { get; set; }
         public Carros Carro { get; set; }
-
-
-
-
     }
 }
