@@ -34,7 +34,9 @@ namespace GarageRev.Models
         /// Idade do Utilizador
         /// </summary>
         [Display(Name = "Data de Nascimento")]
-        public String DataNascimento{ get; set; }
+        [DisplayFormat(DataFormatString="{0:yyyy-MM-dd}", ApplyFormatInEditMode=true)]
+        [DataType(DataType.Date)]
+        public DateTime DataNascimento{ get; set; }
         /// <summary>
         /// Carro favorito do Utilizador
         /// </summary>
