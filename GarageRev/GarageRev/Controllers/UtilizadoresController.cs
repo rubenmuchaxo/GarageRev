@@ -70,14 +70,19 @@ namespace GarageRev.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
 
             var utilizadores = await _context.Utilizadores.FindAsync(id);
             if (utilizadores == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
+
+            //criar variável de sessão para guardar ID do que vai ser editado
+            HttpContext.Session.SetInt32("UserID", utilizadores.Id);
+
+
             return View(utilizadores);
         }
 
@@ -91,6 +96,29 @@ namespace GarageRev.Controllers
             if (id != utilizadores.Id)
             {
                 return NotFound();
+            }
+
+            /*antes de editar os dados do utilizador, é necessário validar os dados:
+             *  -ler a variável de sessão
+             *  -comparar com os dados que o browser fornece
+             *  - se não forem iguais é problemático
+            */
+            var UserIDPrevStored = HttpContext.Session.GetInt32("UserID");
+
+            //se esta var for nula:
+            //  -o método da app está a ser acedido por ferramentas externas
+            //  -está a demorar mais tempo que o suposto
+            if(UserIDPrevStored == null)
+            {
+                ModelState.AddModelError("", "Excedeu o tempo permitido.");
+                //return RedirectToAction("Index");
+                return View(utilizadores);
+            }
+
+            if(UserIDPrevStored != utilizadores.Id)
+            {   //Errado -> redirecionar para index
+                return RedirectToAction("Index");
+
             }
 
             if (ModelState.IsValid)

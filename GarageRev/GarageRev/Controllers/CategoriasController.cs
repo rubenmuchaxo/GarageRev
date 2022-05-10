@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using GarageRev.Data;
+﻿using GarageRev.Data;
 using GarageRev.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GarageRev.Controllers
 {
@@ -70,15 +65,19 @@ namespace GarageRev.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
 
             var categorias = await _context.Categorias.FindAsync(id);
             if (categorias == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
-            return View(categorias);
+
+            //criar variável de sessão para guardar ID do que vai ser editado
+            HttpContext.Session.SetInt32("CategoriaID", categorias.Id);
+
+            return RedirectToAction("Index");
         }
 
         // POST: Categorias/Edit/5
@@ -91,6 +90,29 @@ namespace GarageRev.Controllers
             if (id != categorias.Id)
             {
                 return NotFound();
+            }
+
+            /*antes de editar os dados do utilizador, é necessário validar os dados:
+             *  -ler a variável de sessão
+             *  -comparar com os dados que o browser fornece
+             *  - se não forem iguais é problemático
+            */
+            var CategoriaIDPrevStored = HttpContext.Session.GetInt32("UserID");
+
+            //se esta var for nula:
+            //  -o método da app está a ser acedido por ferramentas externas
+            //  -está a demorar mais tempo que o suposto
+            if (CategoriaIDPrevStored == null)
+            {
+                ModelState.AddModelError("", "Excedeu o tempo permitido.");
+                //return RedirectToAction("Index");
+                return View(categorias);
+            }
+
+            if (CategoriaIDPrevStored != categorias.Id)
+            {   //Errado -> redirecionar para index
+                return RedirectToAction("Index");
+
             }
 
             if (ModelState.IsValid)

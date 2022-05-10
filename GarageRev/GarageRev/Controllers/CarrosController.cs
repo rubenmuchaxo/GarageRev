@@ -130,14 +130,17 @@ namespace GarageRev.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
 
             var carros = await _context.Carros.FindAsync(id);
             if (carros == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
+
+            HttpContext.Session.SetInt32("CarroID", carros.Id);
+
             return View(carros);
         }
 
@@ -151,6 +154,29 @@ namespace GarageRev.Controllers
             if (id != carros.Id)
             {
                 return NotFound();
+            }
+
+            /*antes de editar os dados do carro, é necessário validar os dados:
+             *  -ler a variável de sessão
+             *  -comparar com os dados que o browser fornece
+             *  - se não forem iguais é problemático
+            */
+            var CarroIDPrevStored = HttpContext.Session.GetInt32("CarroID");
+
+            //se esta var for nula:
+            //  -o método da app está a ser acedido por ferramentas externas
+            //  -está a demorar mais tempo que o suposto
+            if (CarroIDPrevStored == null)
+            {
+                ModelState.AddModelError("", "Excedeu o tempo permitido.");
+                //return RedirectToAction("Index");
+                return View(carros);
+            }
+
+            if (CarroIDPrevStored != carros.Id)
+            {   //Errado -> redirecionar para index
+                return RedirectToAction("Index");
+
             }
 
             if (ModelState.IsValid)

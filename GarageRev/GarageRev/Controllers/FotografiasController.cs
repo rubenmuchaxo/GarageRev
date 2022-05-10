@@ -10,23 +10,23 @@ using GarageRev.Models;
 
 namespace GarageRev.Controllers
 {
-    public class ReviewsController : Controller
+    public class FotografiasController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ReviewsController(ApplicationDbContext context)
+        public FotografiasController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Reviews
+        // GET: Fotografias
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Reviews.Include(r => r.Carro).Include(r => r.Utilizador);
+            var applicationDbContext = _context.Fotografias.Include(f => f.Carro);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Reviews/Details/5
+        // GET: Fotografias/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,45 +34,42 @@ namespace GarageRev.Controllers
                 return NotFound();
             }
 
-            var reviews = await _context.Reviews
-                .Include(r => r.Carro)
-                .Include(r => r.Utilizador)
+            var fotografias = await _context.Fotografias
+                .Include(f => f.Carro)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (reviews == null)
+            if (fotografias == null)
             {
                 return NotFound();
             }
 
-            return View(reviews);
+            return View(fotografias);
         }
 
-        // GET: Reviews/Create
+        // GET: Fotografias/Create
         public IActionResult Create()
         {
-            ViewData["CarroFK"] = new SelectList(_context.Carros, "Id", "Id");
-            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Nome");
+            ViewData["CarroFK"] = new SelectList(_context.Carros, "Id", "Combustivel");
             return View();
         }
 
-        // POST: Reviews/Create
+        // POST: Fotografias/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Comentario,UtilizadorFK,CarroFK")] Reviews reviews)
+        public async Task<IActionResult> Create([Bind("Id,FotoPath,CarroFK")] Fotografias fotografias)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(reviews);
+                _context.Add(fotografias);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CarroFK"] = new SelectList(_context.Carros, "Id", "Id", reviews.CarroFK);
-            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Nome", reviews.UtilizadorFK);
-            return View(reviews);
+            ViewData["CarroFK"] = new SelectList(_context.Carros, "Id", "Combustivel", fotografias.CarroFK);
+            return View(fotografias);
         }
 
-        // GET: Reviews/Edit/5
+        // GET: Fotografias/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,49 +77,48 @@ namespace GarageRev.Controllers
                 return RedirectToAction("Index");
             }
 
-            var reviews = await _context.Reviews.FindAsync(id);
-            if (reviews == null)
+            var fotografias = await _context.Fotografias.FindAsync(id);
+            if (fotografias == null)
             {
                 return RedirectToAction("Index");
             }
             //criar variável de sessão para guardar ID do que vai ser editado
-            HttpContext.Session.SetInt32("ReviewID", reviews.Id);
+            HttpContext.Session.SetInt32("FotoID", fotografias.Id);
 
-            ViewData["CarroFK"] = new SelectList(_context.Carros, "Id", "Id", reviews.CarroFK);
-            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Nome", reviews.UtilizadorFK);
-            return View(reviews);
+            ViewData["CarroFK"] = new SelectList(_context.Carros, "Id", "Combustivel", fotografias.CarroFK);
+            return View(fotografias);
         }
 
-        // POST: Reviews/Edit/5
+        // POST: Fotografias/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Comentario,UtilizadorFK,CarroFK")] Reviews reviews)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FotoPath,CarroFK")] Fotografias fotografias)
         {
-            if (id != reviews.Id)
+            if (id != fotografias.Id)
             {
                 return NotFound();
             }
 
-            /*antes de editar os dados da review, é necessário validar os dados:
+            /*antes de editar os dados da fotografia, é necessário validar os dados:
              *  -ler a variável de sessão
              *  -comparar com os dados que o browser fornece
              *  - se não forem iguais é problemático
             */
-            var ReviewIDPrevStored = HttpContext.Session.GetInt32("UserID");
+            var FotoIDPrevStored = HttpContext.Session.GetInt32("UserID");
 
             //se esta var for nula:
             //  -o método da app está a ser acedido por ferramentas externas
             //  -está a demorar mais tempo que o suposto
-            if (ReviewIDPrevStored == null)
+            if (FotoIDPrevStored == null)
             {
                 ModelState.AddModelError("", "Excedeu o tempo permitido.");
                 //return RedirectToAction("Index");
-                return View(reviews);
+                return View(fotografias);
             }
 
-            if (ReviewIDPrevStored != reviews.Id)
+            if (FotoIDPrevStored != fotografias.Id)
             {   //Errado -> redirecionar para index
                 return RedirectToAction("Index");
 
@@ -132,12 +128,12 @@ namespace GarageRev.Controllers
             {
                 try
                 {
-                    _context.Update(reviews);
+                    _context.Update(fotografias);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ReviewsExists(reviews.Id))
+                    if (!FotografiasExists(fotografias.Id))
                     {
                         return NotFound();
                     }
@@ -148,12 +144,11 @@ namespace GarageRev.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CarroFK"] = new SelectList(_context.Carros, "Id", "Id", reviews.CarroFK);
-            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Nome", reviews.UtilizadorFK);
-            return View(reviews);
+            ViewData["CarroFK"] = new SelectList(_context.Carros, "Id", "Combustivel", fotografias.CarroFK);
+            return View(fotografias);
         }
 
-        // GET: Reviews/Delete/5
+        // GET: Fotografias/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -161,32 +156,31 @@ namespace GarageRev.Controllers
                 return NotFound();
             }
 
-            var reviews = await _context.Reviews
-                .Include(r => r.Carro)
-                .Include(r => r.Utilizador)
+            var fotografias = await _context.Fotografias
+                .Include(f => f.Carro)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (reviews == null)
+            if (fotografias == null)
             {
                 return NotFound();
             }
 
-            return View(reviews);
+            return View(fotografias);
         }
 
-        // POST: Reviews/Delete/5
+        // POST: Fotografias/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var reviews = await _context.Reviews.FindAsync(id);
-            _context.Reviews.Remove(reviews);
+            var fotografias = await _context.Fotografias.FindAsync(id);
+            _context.Fotografias.Remove(fotografias);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ReviewsExists(int id)
+        private bool FotografiasExists(int id)
         {
-            return _context.Reviews.Any(e => e.Id == id);
+            return _context.Fotografias.Any(e => e.Id == id);
         }
     }
 }
