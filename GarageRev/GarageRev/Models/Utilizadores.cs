@@ -7,6 +7,10 @@ namespace GarageRev.Models
     /// </summary>
     public class Utilizadores
     {
+        public Utilizadores()
+        {
+            Reviews = new HashSet<Reviews>();
+        }
         /// <summary>
         /// Identificador do Utilizador
         /// </summary>
