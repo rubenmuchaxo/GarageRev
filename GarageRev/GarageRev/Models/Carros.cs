@@ -31,10 +31,10 @@ namespace GarageRev.Models
         [Required]
         public string Modelo { get; set; }
         /// <summary>
-        /// Versão de cada Carro
+        /// Versao de cada Carro
         /// </summary>
         [Required]
-        public string Versão { get; set; }
+        public string Versao { get; set; }
         /// <summary>
         /// Tipo de Combustivel de cada Carro
         /// </summary>
@@ -47,12 +47,13 @@ namespace GarageRev.Models
         [Required]
         public int Ano { get; set; }
         /// <summary>
-        /// Cilindrada, em cm3, de cada Carro
+        /// CilindradaouCapacidadeBateria, Cilindrada em cm3, de cada Carro, eCapacidade de bateria em kWh 
         /// </summary>
         [Required]
-        public int Cilindrada { get; set; }
+        public int CilindradaouCapacidadeBateria { get; set; }
+        
         /// <summary>
-        /// Potencia, em cv, de cada Carro
+        /// Potencia, em PS, de cada Carro
         /// </summary>
         [Required]
         [Display(Name = "Potência")]

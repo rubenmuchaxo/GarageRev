@@ -48,7 +48,7 @@ namespace GarageRev.Data.Migrations
                     b.Property<int>("Ano")
                         .HasColumnType("int");
 
-                    b.Property<int>("Cilindrada")
+                    b.Property<int>("CilindradaouCapacidadeBateria")
                         .HasColumnType("int");
 
                     b.Property<string>("Combustivel")
@@ -72,7 +72,7 @@ namespace GarageRev.Data.Migrations
                     b.Property<string>("TipoCaixa")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Versão")
+                    b.Property<string>("Versao")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
