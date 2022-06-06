@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace GarageRev.Data.Migrations
 {
-    public partial class AddControllersAndRegex : Migration
+    public partial class UpdatedDatabaseNoPhoto : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,16 +15,15 @@ namespace GarageRev.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Marca = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Modelo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Versão = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Combustivel = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Marca = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Modelo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Versao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Combustivel = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Ano = table.Column<int>(type: "int", nullable: false),
-                    Cilindrada = table.Column<int>(type: "int", nullable: false),
+                    CilindradaouCapacidadeBateria = table.Column<int>(type: "int", nullable: false),
                     Potencia = table.Column<int>(type: "int", nullable: false),
-                    TipoCaixa = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Nportas = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Fotografia = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    TipoCaixa = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nportas = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -52,7 +52,7 @@ namespace GarageRev.Data.Migrations
                     Nome = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nacionalidade = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    DataNascimento = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DataNascimento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CarroFav = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -129,6 +129,40 @@ namespace GarageRev.Data.Migrations
                         principalTable: "Utilizadores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Carros",
+                columns: new[] { "Id", "Ano", "CilindradaouCapacidadeBateria", "Combustivel", "Marca", "Modelo", "Nportas", "Potencia", "TipoCaixa", "Versao" },
+                values: new object[,]
+                {
+                    { 1, 2017, 42, "Electric", "BMW", "i3", "5", 170, "1 speed Auto CVT", "120Ah" },
+                    { 2, 2018, 42, "Electric", "BMW", "i3", "5", 184, "1 speed Auto CVT", "s 120Ah" },
+                    { 3, 2021, 84, "Electric", "BMW", "i4", "5", 544, "1 speed Auto CVT", "M50" },
+                    { 4, 2021, 84, "Electric", "BMW", "i4", "5", 340, "1 speed Auto CVT", "edrive40" },
+                    { 5, 2020, 1499, "Petrol", "BMW", "F40 serie 1", "5", 109, "6 speed Manual", "116i" },
+                    { 6, 2021, 1499, "Petrol", "BMW", "F40 serie 1", "5", 136, "7 speed DualClutch Automatic", "118i Auto" },
+                    { 7, 2020, 1998, "Petrol", "BMW", "F40 serie 1", "5", 265, "7 speed DualClutch Automatic", "128ti" },
+                    { 8, 2019, 1998, "Petrol", "BMW", "F40 serie 1", "5", 306, "8 speed Automatic", "M135i xDrive" },
+                    { 9, 2021, 1998, "Petrol", "BMW", "G02 X4 LCI", "5", 245, "8 speed Automatic", "xDrive30i" },
+                    { 10, 2021, 1499, "Petrol", "BMW", "F44 serie 2 Gran Coupe", "4", 136, "6 speed Manual", "218i" },
+                    { 11, 2020, 1998, "Petrol", "BMW", "G21 serie 3 Touring", "5", 156, "8 speed Automatic", "318i Auto" },
+                    { 12, 2021, 1998, "Petrol", "BMW", "G23 serie 4 Cabrio", "2", 258, "8 speed Automatic", "430i" },
+                    { 13, 2022, 999, "Petrol", "Ford", "Fiesta", "5", 100, "6 speed Manual", "1.0 Ecoboost" },
+                    { 14, 2017, 988, "Petrol", "Honda", "Civic 10", "5", 129, "1 speed auto CVT", "1.0 Turbo VTEC" },
+                    { 15, 2020, 2268, "Diesel", "Mitsubishi", "L200 Club Cab ", "2", 150, "6 speed Manual", "2.2 DI-D ClearTec" },
+                    { 16, 2020, 1193, "Petrol", "Mitsubishi", "Space Star ", "5", 80, "5 speed Manul", "1.2" },
+                    { 17, 2019, 999, "Petrol", "Nissan", "Micra K14  ", "5", 100, "1 speed auto CVT", "I-GT 100" },
+                    { 18, 2017, 40, "Electric", "Nissan", "Leaf 2", "5", 150, "1 speed Auto CVT", "40kWh" },
+                    { 19, 2021, 1332, "Petrol", "Nissan", "Qashqai J12", "5", 158, "6 speed Manual", "DIG-T 158" },
+                    { 20, 2018, 3799, "Petrol", "Nissan", "GT R", "3", 600, "6 speed DualClutch Automatic", "Nismo" },
+                    { 21, 1998, 2568, "Petrol", "Nissan", "R33 Skyline ", "4", 280, "5 speed Manual", "GT-R 40th Anniversary Autech" },
+                    { 22, 2019, 1499, "Diesel", "Opel", "Corsa F", "5", 102, "6 speed Manual", "1.5 Diesel" },
+                    { 23, 2018, 998, "Petrol", "Peugeot", "108", "3", 72, "5 speed Manual", "3-door 1.0 e-VTi 72" },
+                    { 24, 2021, 1499, "Diesel", "Peugeot", "508 II SW", "5", 130, "8 speed Automatic", "BlueHDi 130 Auto" },
+                    { 25, 2015, 999, "Petrol", "Peugeot", "208 Facelift", "5", 68, "5 speed Manual", "1.0 PureTech 68 " },
+                    { 26, 2019, 1461, "Diesel", "Renault", "Clio 5", "5", 85, "6 speed Manual", "Blue DCi 85" },
+                    { 27, 2013, 6262, "Hybrid/Petrol", "Ferrari", "La Ferrari", "2", 800, "7 speed Sequential", "F70 F150 HY-KERS System 963HP" }
                 });
 
             migrationBuilder.CreateIndex(

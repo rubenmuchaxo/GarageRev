@@ -56,7 +56,7 @@ namespace GarageRev.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Marca,Modelo,Versão,Combustivel,Ano,Cilindrada,Potencia,TipoCaixa,Nportas,Fotografia")] Carros carros, IFormFile newFotoCarro)
+        public async Task<IActionResult> Create([Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas")] Carros carros) //, IFormFile newFotoCarro
         {
             ///process the image
             ///if file is null
@@ -69,7 +69,7 @@ namespace GarageRev.Controllers
             ///         -> add the filename to vet data
             ///         -> save the file on the disk
 
-            if (newFotoCarro == null)
+            /*if (newFotoCarro == null)
             {
                 carros.Fotografia = "noCar.png";
             }
@@ -85,7 +85,7 @@ namespace GarageRev.Controllers
                 //define image name
                 Guid g;
                 g = Guid.NewGuid();
-                string imageName = carros.Marca + "_" + carros.Modelo + "_" + carros.Versão + "_" + g.ToString();
+                string imageName = carros.Marca + "_" + carros.Modelo + "_" + carros.Versao + "_" + g.ToString();
                 string extensionImage = Path.GetExtension(newFotoCarro.FileName).ToLower();
                 imageName += extensionImage;
                 //add image name to vet data
@@ -121,7 +121,7 @@ namespace GarageRev.Controllers
                     await newFotoCarro.CopyToAsync(stream);
                 }
                 return RedirectToAction(nameof(Index));
-            }
+            }*/
             return View(carros);
         }
 
@@ -130,14 +130,17 @@ namespace GarageRev.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
 
             var carros = await _context.Carros.FindAsync(id);
             if (carros == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
+
+            HttpContext.Session.SetInt32("CarroID", carros.Id);
+
             return View(carros);
         }
 
@@ -146,11 +149,34 @@ namespace GarageRev.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Marca,Modelo,Versão,Combustivel,Ano,Cilindrada,Potencia,TipoCaixa,Nportas,Fotografia")] Carros carros)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas")] Carros carros)
         {
             if (id != carros.Id)
             {
                 return NotFound();
+            }
+
+            /*antes de editar os dados do carro, é necessário validar os dados:
+             *  -ler a variável de sessão
+             *  -comparar com os dados que o browser fornece
+             *  - se não forem iguais é problemático
+            */
+            var CarroIDPrevStored = HttpContext.Session.GetInt32("CarroID");
+
+            //se esta var for nula:
+            //  -o método da app está a ser acedido por ferramentas externas
+            //  -está a demorar mais tempo que o suposto
+            if (CarroIDPrevStored == null)
+            {
+                ModelState.AddModelError("", "Excedeu o tempo permitido.");
+                //return RedirectToAction("Index");
+                return View(carros);
+            }
+
+            if (CarroIDPrevStored != carros.Id)
+            {   //Errado -> redirecionar para index
+                return RedirectToAction("Index");
+
             }
 
             if (ModelState.IsValid)
