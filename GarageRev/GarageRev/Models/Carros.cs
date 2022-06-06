@@ -70,10 +70,6 @@ namespace GarageRev.Models
         [Required]
         [Display(Name = "Número de Portas")]
         public string Nportas { get; set; }
-        /// <summary>
-        /// Fotografias de cada carro
-        /// </summary>
-        public string Fotografia { get; set; }
 
         public ICollection<Fotografias> Fotografias { get; set; }
         public ICollection<Categorias> Categorias { get; set; }

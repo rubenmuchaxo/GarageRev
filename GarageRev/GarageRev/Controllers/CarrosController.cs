@@ -56,7 +56,7 @@ namespace GarageRev.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas,Fotografia")] Carros carros, IFormFile newFotoCarro)
+        public async Task<IActionResult> Create([Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas")] Carros carros) //, IFormFile newFotoCarro
         {
             ///process the image
             ///if file is null
@@ -69,7 +69,7 @@ namespace GarageRev.Controllers
             ///         -> add the filename to vet data
             ///         -> save the file on the disk
 
-            if (newFotoCarro == null)
+            /*if (newFotoCarro == null)
             {
                 carros.Fotografia = "noCar.png";
             }
@@ -121,7 +121,7 @@ namespace GarageRev.Controllers
                     await newFotoCarro.CopyToAsync(stream);
                 }
                 return RedirectToAction(nameof(Index));
-            }
+            }*/
             return View(carros);
         }
 
@@ -149,7 +149,7 @@ namespace GarageRev.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas,Fotografia")] Carros carros)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas")] Carros carros)
         {
             if (id != carros.Id)
             {
