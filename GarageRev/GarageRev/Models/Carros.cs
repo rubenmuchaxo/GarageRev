@@ -34,6 +34,7 @@ namespace GarageRev.Models
         /// Versao de cada Carro
         /// </summary>
         [Required]
+        [Display(Name = "Versão")]
         public string Versao { get; set; }
         /// <summary>
         /// Tipo de Combustivel de cada Carro
@@ -50,6 +51,7 @@ namespace GarageRev.Models
         /// CilindradaouCapacidadeBateria, Cilindrada em cm3, de cada Carro, eCapacidade de bateria em kWh 
         /// </summary>
         [Required]
+        [Display(Name = "Cilindrada/Bateria")]
         public int CilindradaouCapacidadeBateria { get; set; }
         
         /// <summary>

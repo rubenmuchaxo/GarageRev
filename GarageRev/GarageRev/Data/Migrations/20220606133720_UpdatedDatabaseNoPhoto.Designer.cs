@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageRev.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220605154151_dbUpdateTesteFoto")]
-    partial class dbUpdateTesteFoto
+    [Migration("20220606133720_UpdatedDatabaseNoPhoto")]
+    partial class UpdatedDatabaseNoPhoto
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -57,9 +57,6 @@ namespace GarageRev.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Fotografia")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Marca")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -94,7 +91,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2017,
                             CilindradaouCapacidadeBateria = 42,
                             Combustivel = "Electric",
-                            Fotografia = "123",
                             Marca = "BMW",
                             Modelo = "i3",
                             Nportas = "5",
@@ -108,7 +104,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2018,
                             CilindradaouCapacidadeBateria = 42,
                             Combustivel = "Electric",
-                            Fotografia = "123",
                             Marca = "BMW",
                             Modelo = "i3",
                             Nportas = "5",
@@ -122,7 +117,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 84,
                             Combustivel = "Electric",
-                            Fotografia = "123",
                             Marca = "BMW",
                             Modelo = "i4",
                             Nportas = "5",
@@ -136,7 +130,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 84,
                             Combustivel = "Electric",
-                            Fotografia = "123",
                             Marca = "BMW",
                             Modelo = "i4",
                             Nportas = "5",
@@ -150,7 +143,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2020,
                             CilindradaouCapacidadeBateria = 1499,
                             Combustivel = "Petrol",
-                            Fotografia = "123",
                             Marca = "BMW",
                             Modelo = "F40 serie 1",
                             Nportas = "5",
@@ -164,7 +156,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 1499,
                             Combustivel = "Petrol",
-                            Fotografia = "123",
                             Marca = "BMW",
                             Modelo = "F40 serie 1",
                             Nportas = "5",
@@ -178,7 +169,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2020,
                             CilindradaouCapacidadeBateria = 1998,
                             Combustivel = "Petrol",
-                            Fotografia = "123",
                             Marca = "BMW",
                             Modelo = "F40 serie 1",
                             Nportas = "5",
@@ -192,7 +182,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2019,
                             CilindradaouCapacidadeBateria = 1998,
                             Combustivel = "Petrol",
-                            Fotografia = "123",
                             Marca = "BMW",
                             Modelo = "F40 serie 1",
                             Nportas = "5",
@@ -206,7 +195,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 1998,
                             Combustivel = "Petrol",
-                            Fotografia = "123",
                             Marca = "BMW",
                             Modelo = "G02 X4 LCI",
                             Nportas = "5",
@@ -220,7 +208,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 1499,
                             Combustivel = "Petrol",
-                            Fotografia = "123",
                             Marca = "BMW",
                             Modelo = "F44 serie 2 Gran Coupe",
                             Nportas = "4",
@@ -234,7 +221,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2020,
                             CilindradaouCapacidadeBateria = 1998,
                             Combustivel = "Petrol",
-                            Fotografia = "123",
                             Marca = "BMW",
                             Modelo = "G21 serie 3 Touring",
                             Nportas = "5",
@@ -248,7 +234,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 1998,
                             Combustivel = "Petrol",
-                            Fotografia = "123",
                             Marca = "BMW",
                             Modelo = "G23 serie 4 Cabrio",
                             Nportas = "2",
@@ -262,7 +247,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2022,
                             CilindradaouCapacidadeBateria = 999,
                             Combustivel = "Petrol",
-                            Fotografia = "123",
                             Marca = "Ford",
                             Modelo = "Fiesta",
                             Nportas = "5",
@@ -276,7 +260,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2017,
                             CilindradaouCapacidadeBateria = 988,
                             Combustivel = "Petrol",
-                            Fotografia = "123",
                             Marca = "Honda",
                             Modelo = "Civic 10",
                             Nportas = "5",
@@ -290,7 +273,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2020,
                             CilindradaouCapacidadeBateria = 2268,
                             Combustivel = "Diesel",
-                            Fotografia = "123",
                             Marca = "Mitsubishi",
                             Modelo = "L200 Club Cab ",
                             Nportas = "2",
@@ -304,7 +286,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2020,
                             CilindradaouCapacidadeBateria = 1193,
                             Combustivel = "Petrol",
-                            Fotografia = "123",
                             Marca = "Mitsubishi",
                             Modelo = "Space Star ",
                             Nportas = "5",
@@ -318,7 +299,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2019,
                             CilindradaouCapacidadeBateria = 999,
                             Combustivel = "Petrol",
-                            Fotografia = "123",
                             Marca = "Nissan",
                             Modelo = "Micra K14  ",
                             Nportas = "5",
@@ -332,7 +312,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2017,
                             CilindradaouCapacidadeBateria = 40,
                             Combustivel = "Electric",
-                            Fotografia = "123",
                             Marca = "Nissan",
                             Modelo = "Leaf 2",
                             Nportas = "5",
@@ -346,7 +325,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 1332,
                             Combustivel = "Petrol",
-                            Fotografia = "123",
                             Marca = "Nissan",
                             Modelo = "Qashqai J12",
                             Nportas = "5",
@@ -360,7 +338,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2018,
                             CilindradaouCapacidadeBateria = 3799,
                             Combustivel = "Petrol",
-                            Fotografia = "123",
                             Marca = "Nissan",
                             Modelo = "GT R",
                             Nportas = "3",
@@ -374,7 +351,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 1998,
                             CilindradaouCapacidadeBateria = 2568,
                             Combustivel = "Petrol",
-                            Fotografia = "123",
                             Marca = "Nissan",
                             Modelo = "R33 Skyline ",
                             Nportas = "4",
@@ -388,7 +364,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2019,
                             CilindradaouCapacidadeBateria = 1499,
                             Combustivel = "Diesel",
-                            Fotografia = "123",
                             Marca = "Opel",
                             Modelo = "Corsa F",
                             Nportas = "5",
@@ -402,7 +377,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2018,
                             CilindradaouCapacidadeBateria = 998,
                             Combustivel = "Petrol",
-                            Fotografia = "123",
                             Marca = "Peugeot",
                             Modelo = "108",
                             Nportas = "3",
@@ -416,7 +390,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 1499,
                             Combustivel = "Diesel",
-                            Fotografia = "123",
                             Marca = "Peugeot",
                             Modelo = "508 II SW",
                             Nportas = "5",
@@ -430,7 +403,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2015,
                             CilindradaouCapacidadeBateria = 999,
                             Combustivel = "Petrol",
-                            Fotografia = "123",
                             Marca = "Peugeot",
                             Modelo = "208 Facelift",
                             Nportas = "5",
@@ -444,7 +416,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2019,
                             CilindradaouCapacidadeBateria = 1461,
                             Combustivel = "Diesel",
-                            Fotografia = "123",
                             Marca = "Renault",
                             Modelo = "Clio 5",
                             Nportas = "5",
@@ -458,7 +429,6 @@ namespace GarageRev.Data.Migrations
                             Ano = 2013,
                             CilindradaouCapacidadeBateria = 6262,
                             Combustivel = "Hybrid/Petrol",
-                            Fotografia = "123",
                             Marca = "Ferrari",
                             Modelo = "La Ferrari",
                             Nportas = "2",
