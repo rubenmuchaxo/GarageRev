@@ -528,8 +528,8 @@ namespace GarageRev.Data.Migrations
                     b.Property<string>("CarroFav")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DataNascimento")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DataNascimento")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
