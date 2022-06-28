@@ -12,6 +12,7 @@ namespace GarageRev.Models
         {
             Fotografias = new HashSet<Fotografias>();
             Categorias = new HashSet<Categorias>();
+            Reviews = new HashSet<Reviews>();
         }
 
         /// <summary>
@@ -33,7 +34,8 @@ namespace GarageRev.Models
         /// Versão de cada Carro
         /// </summary>
         [Required]
-        public string Versão { get; set; }
+        [Display(Name = "Versão")]
+        public string Versao { get; set; }
         /// <summary>
         /// Tipo de Combustivel de cada Carro
         /// </summary>
@@ -49,7 +51,8 @@ namespace GarageRev.Models
         /// Cilindrada, em cm3, de cada Carro
         /// </summary>
         [Required]
-        public int Cilindrada { get; set; }
+        [Display(Name = "Cilindrada/CapacidadeBateria")]
+        public int CilindradaouCapacidadeBateria { get; set; }
         /// <summary>
         /// Potencia, em cv, de cada Carro
         /// </summary>
@@ -71,7 +74,6 @@ namespace GarageRev.Models
         /// <summary>
         /// Fotografias de cada carro
         /// </summary>
-        public string Fotografia { get; set; }
 
         public ICollection<Fotografias> Fotografias { get; set; }
         public ICollection<Categorias> Categorias { get; set; }

@@ -19,7 +19,7 @@
                 @Html.DisplayNameFor(model => model.Modelo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Versão)
+                @Html.DisplayNameFor(model => model.Versao)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Combustivel)
@@ -28,7 +28,7 @@
                 @Html.DisplayNameFor(model => model.Ano)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cilindrada)
+                @Html.DisplayNameFor(model => model.CilindradaouCapacidadeBateria)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Potencia)
@@ -39,9 +39,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Nportas)
             </th>
-            <th>
+@*            <th>
                 @Html.DisplayNameFor(model => model.Fotografia)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -55,7 +55,7 @@
                 @Html.DisplayFor(modelItem => item.Modelo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Versão)
+                @Html.DisplayFor(modelItem => item.Versao)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Combustivel)
@@ -64,7 +64,7 @@
                 @Html.DisplayFor(modelItem => item.Ano)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cilindrada)
+                @Html.DisplayFor(modelItem => item.CilindradaouCapacidadeBateria)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Potencia)
@@ -76,13 +76,13 @@
                 @Html.DisplayFor(modelItem => item.Nportas)
             </td>
             <td>
-                <a href="~/Photos/@item.Fotografia" target="_blank">
+                @*<a href="~/Photos/@item.Fotografia" target="_blank">*@
                 @*@Html.DisplayFor(modelItem => item.Photo)*@
-               <img src="~/Photos/@item.Fotografia" 
-               alt="photo of Car: @Html.DisplayFor(modelItem => item.Modelo)" 
+               @*<img src="~/Photos/@item.Fotografia" *@
+@*               alt="photo of Car: @Html.DisplayFor(modelItem => item.Modelo)" 
                title="@item.Modelo" 
                height="50" />
-           </a>
+           </a>*@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using GarageRev.Data;
+using GarageRev.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using GarageRev.Data;
-using GarageRev.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GarageRev.Controllers
 {
@@ -16,14 +16,21 @@ namespace GarageRev.Controllers
         private readonly IWebHostEnvironment _webHostEnvironment;
 
 
-        public CarrosController(ApplicationDbContext context)
+        public CarrosController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Carros
         public async Task<IActionResult> Index()
         {
+            /* execute the db command
+             * select *
+             * from Advertisements
+             * 
+             * and send Data to View
+             */
             return View(await _context.Carros.ToListAsync());
         }
 
@@ -56,7 +63,7 @@ namespace GarageRev.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Marca,Modelo,Versão,Combustivel,Ano,Cilindrada,Potencia,TipoCaixa,Nportas,Fotografia")] Carros carros, IFormFile newFotoCarro)
+        public async Task<IActionResult> Create([Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas")] Carros carros, IFormFile newFotoCarro)
         {
             ///process the image
             ///if file is null
@@ -69,28 +76,28 @@ namespace GarageRev.Controllers
             ///         -> add the filename to vet data
             ///         -> save the file on the disk
 
-            if (newFotoCarro == null)
-            {
-                carros.Fotografia = "noCar.png";
-            }
-            else if (!(newFotoCarro.ContentType == "image/jpeg" || newFotoCarro.ContentType == "image/pen"))
-            {
-                //error message
-                ModelState.AddModelError("", "Por favor selecione uma fotografia.");
-                //resend control to view with data provided by the user
-                return View(carros);
-            }
-            else
-            {
-                //define image name
-                Guid g;
-                g = Guid.NewGuid();
-                string imageName = carros.Marca + "_" + carros.Modelo + "_" + carros.Versão + "_" + g.ToString();
-                string extensionImage = Path.GetExtension(newFotoCarro.FileName).ToLower();
-                imageName += extensionImage;
-                //add image name to vet data
-                carros.Fotografia = imageName;
-            }
+            //if (newFotoCarro == null)
+            //{
+            //    carros.Fotografia = "noCar.png";
+            //}
+            //else if (!(newFotoCarro.ContentType == "image/jpeg" || newFotoCarro.ContentType == "image/pen"))
+            //{
+            //    //error message
+            //    ModelState.AddModelError("", "Por favor selecione uma fotografia.");
+            //    //resend control to view with data provided by the user
+            //    return View(carros);
+            //}
+            //else
+            //{
+            //    //define image name
+            //    Guid g;
+            //    g = Guid.NewGuid();
+            //    string imageName = carros.Marca + "_" + carros.Modelo + "_" + carros.Versão + "_" + g.ToString();
+            //    string extensionImage = Path.GetExtension(newFotoCarro.FileName).ToLower();
+            //    imageName += extensionImage;
+            //    //add image name to vet data
+            //    carros.Fotografia = imageName;
+            //}
 
             //validate if data provided by user is good
             if (ModelState.IsValid)
@@ -109,17 +116,17 @@ namespace GarageRev.Controllers
                     return View(carros);
                 }
 
-                //save image file to disk
-                if (newFotoCarro != null)
-                {
-                    //ask the server what address it wants to use
-                    string addressToStoreFile = _webHostEnvironment.WebRootPath;
-                    string newImageLocation = Path.Combine(addressToStoreFile, "Photos", carros.Fotografia);
+                ////save image file to disk
+                //if (newFotoCarro != null)
+                //{
+                //    //ask the server what address it wants to use
+                //    string addressToStoreFile = _webHostEnvironment.WebRootPath;
+                //    string newImageLocation = Path.Combine(addressToStoreFile, "Photos", carros.Fotografia);
 
-                    //save image file to disk
-                    using var stream = new FileStream(newImageLocation, FileMode.Create);
-                    await newFotoCarro.CopyToAsync(stream);
-                }
+                //    //save image file to disk
+                //    using var stream = new FileStream(newImageLocation, FileMode.Create);
+                //    await newFotoCarro.CopyToAsync(stream);
+                //}
                 return RedirectToAction(nameof(Index));
             }
             return View(carros);
@@ -146,7 +153,7 @@ namespace GarageRev.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Marca,Modelo,Versão,Combustivel,Ano,Cilindrada,Potencia,TipoCaixa,Nportas,Fotografia")] Carros carros)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas")] Carros carros)
         {
             if (id != carros.Id)
             {
