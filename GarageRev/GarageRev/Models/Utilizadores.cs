@@ -16,6 +16,12 @@ namespace GarageRev.Models
         /// </summary>
         [Key]
         public int Id { get; set; }
+
+        /// <summary>
+        /// ligação entre os Utilizadores e a tabela de Autenticação
+        /// </summary>
+        public string IdUtilizador { get; set; }
+
         /// <summary>
         /// Nome do Utilizador
         /// </summary>

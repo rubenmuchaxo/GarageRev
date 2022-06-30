@@ -505,6 +505,9 @@ namespace GarageRev.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("UtilizadorFK")
                         .HasColumnType("int");
 
@@ -533,6 +536,9 @@ namespace GarageRev.Data.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdUtilizador")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nacionalidade")
@@ -579,14 +585,14 @@ namespace GarageRev.Data.Migrations
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "d3c7af11-4598-4af5-aa3e-d99e65545d0e",
+                            ConcurrencyStamp = "1ba9f7ab-a0ae-4189-9f0b-9e5851fe59ea",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         },
                         new
                         {
                             Id = "a",
-                            ConcurrencyStamp = "d8f27e0a-2d12-4e58-aa9a-029925a6b601",
+                            ConcurrencyStamp = "96ef91f7-67cb-47ac-b1c8-af64228c70e0",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

@@ -1,5 +1,6 @@
 ﻿using GarageRev.Data;
 using GarageRev.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,10 @@ namespace GarageRev.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
-
+        /// <summary>
+        /// variavel que recolhe os dados da pessoa que se autenticou
+        /// </summary>
+        private readonly UserManager<IdentityUser> _userManager;
 
         public CarrosController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
@@ -50,6 +54,35 @@ namespace GarageRev.Controllers
             }
 
             return View(carros);
+        }
+
+        /// <summary>
+        /// Apresentar as reviews
+        /// falta parte de autenticação para poder verificar as reviews
+        /// </summary>
+        /// <param name="idCarro">Id do Carro respetivo à review</param>
+        /// <param name="comentario"> conteudo da review</param>
+        /// <returns></returns>
+        public async Task<IActionResult> ApresentaReview(int idCarro, string comentario)
+        {
+            var utilizador = _context.Utilizadores.Where(u => u.IdUtilizador == _userManager.GetUserId(User)).FirstOrDefault();
+
+            {
+                //variavel que contem os dados do carro, review e utilizador
+                var review = new Reviews
+                {
+                    CarroFK = idCarro,
+                    Comentario = comentario.Replace("\r\n", "<br />"),
+                    Data = DateTime.Now,
+                    Utilizador = utilizador
+                };
+                //adiciona a review à Base de Dados
+                _context.Reviews.Add(review);
+                //Guarda as alterações na Base de Dados
+                await _context.SaveChangesAsync();
+                //redirecionar para a página de detalhes de carro
+                return RedirectToAction(nameof(Details), new { id = idCarro });
+            }
         }
 
         // GET: Carros/Create
