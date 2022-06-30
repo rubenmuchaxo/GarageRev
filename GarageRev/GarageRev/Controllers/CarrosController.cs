@@ -63,7 +63,7 @@ namespace GarageRev.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas")] Carros carros, IFormFile newFotoCarro)
+        public async Task<IActionResult> Create([Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas")] Carros carros, IFormFileCollection files)
         {
             ///process the image
             ///if file is null
@@ -75,61 +75,50 @@ namespace GarageRev.Controllers
             ///         -> define the name that the image must have
             ///         -> add the filename to vet data
             ///         -> save the file on the disk
+            List<Fotografias> fotoscarro = new List<Fotografias>();
 
-            //if (newFotoCarro == null)
-            //{
-            //    carros.Fotografia = "noCar.png";
-            //}
-            //else if (!(newFotoCarro.ContentType == "image/jpeg" || newFotoCarro.ContentType == "image/pen"))
-            //{
-            //    //error message
-            //    ModelState.AddModelError("", "Por favor selecione uma fotografia.");
-            //    //resend control to view with data provided by the user
-            //    return View(carros);
-            //}
-            //else
-            //{
-            //    //define image name
-            //    Guid g;
-            //    g = Guid.NewGuid();
-            //    string imageName = carros.Marca + "_" + carros.Modelo + "_" + carros.Versão + "_" + g.ToString();
-            //    string extensionImage = Path.GetExtension(newFotoCarro.FileName).ToLower();
-            //    imageName += extensionImage;
-            //    //add image name to vet data
-            //    carros.Fotografia = imageName;
-            //}
-
-            //validate if data provided by user is good
-            if (ModelState.IsValid)
+            if (!files.Any())
             {
-                try
-                {//add vet data to database
-                    _context.Add(carros);
-                    //commit (DB)
-                    await _context.SaveChangesAsync();
-                }
-                catch (Exception)
-                {
-                    //if the code arrives here, some exception was caught -> error
-                    //add a model error 
-                    ModelState.AddModelError("", "Something went wrong. Unable to store data");
-                    return View(carros);
-                }
-
-                ////save image file to disk
-                //if (newFotoCarro != null)
-                //{
-                //    //ask the server what address it wants to use
-                //    string addressToStoreFile = _webHostEnvironment.WebRootPath;
-                //    string newImageLocation = Path.Combine(addressToStoreFile, "Photos", carros.Fotografia);
-
-                //    //save image file to disk
-                //    using var stream = new FileStream(newImageLocation, FileMode.Create);
-                //    await newFotoCarro.CopyToAsync(stream);
-                //}
-                return RedirectToAction(nameof(Index));
+                //nao existe fotos de carros
+                fotoscarro.Add(new Fotografias { CarroFK = carros.Id, FotoPath = "noCar.png" });
             }
-            return View(carros);
+            else
+            {
+                foreach (var foto in files)
+                {
+                    if (!(foto.ContentType == "image/jpeg" || foto.ContentType == "image/png"))
+                    {
+                        //error message
+                        ModelState.AddModelError("", "Por favor selecione uma fotografia do tipo .jpeg ou .png .");
+                        //resend control to view with data provided by the user
+                        return View(carros);
+                    }
+                    else
+                    {
+                        //guardar o nome do ficheiro
+                        Guid g;
+                        g = Guid.NewGuid();
+                        string imageName = carros.Marca + "_" + carros.Modelo + "_" + carros.Versao + "_" + g.ToString();
+                        string extensionImage = Path.GetExtension(foto.FileName).ToLower();
+                        imageName += extensionImage;
+                        //guardar ficheiro
+                        string addressToStoreFile = _webHostEnvironment.WebRootPath;
+                        string caminho = Path.Combine(addressToStoreFile, "Photos", imageName);
+
+                        //Adição da foto a lista com fk e fotopath coorespondente
+                        fotoscarro.Add(new Fotografias { CarroFK = carros.Id, FotoPath = imageName });
+
+                        using var stream = new FileStream(caminho, FileMode.Create);
+                        await foto.CopyToAsync(stream);
+                    }
+
+                }
+            }
+            _context.Fotografias.AddRange(fotoscarro);
+            await _context.SaveChangesAsync();
+
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Carros/Edit/5

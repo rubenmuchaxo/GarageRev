@@ -48,10 +48,10 @@ namespace GarageRev.Models
         [Required]
         public int Ano { get; set; }
         /// <summary>
-        /// Cilindrada, em cm3, de cada Carro
+        /// Cilindrada, em cm3, de cada Carro ou bateria em kwh
         /// </summary>
         [Required]
-        [Display(Name = "Cilindrada/CapacidadeBateria")]
+        [Display(Name = "Cilindrada/Bateria(cm3/kWh")]
         public int CilindradaouCapacidadeBateria { get; set; }
         /// <summary>
         /// Potencia, em cv, de cada Carro
