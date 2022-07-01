@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageRev.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220606133720_UpdatedDatabaseNoPhoto")]
-    partial class UpdatedDatabaseNoPhoto
+    [Migration("20220630221742_fixmigracoes")]
+    partial class fixmigracoes
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -452,6 +452,23 @@ namespace GarageRev.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categorias");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            NomeCat = "Elétrico"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            NomeCat = "Desportivo"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            NomeCat = "Citadino"
+                        });
                 });
 
             modelBuilder.Entity("GarageRev.Models.Fotografias", b =>
@@ -559,6 +576,22 @@ namespace GarageRev.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "c",
+                            ConcurrencyStamp = "2aa22c5e-e9ab-4861-8f58-89caa7bf0848",
+                            Name = "Cliente",
+                            NormalizedName = "CLIENTE"
+                        },
+                        new
+                        {
+                            Id = "a",
+                            ConcurrencyStamp = "f7dae83d-0d6f-4874-9724-872f637d287b",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

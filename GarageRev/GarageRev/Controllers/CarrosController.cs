@@ -1,5 +1,6 @@
 ﻿using GarageRev.Data;
 using GarageRev.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -63,6 +64,7 @@ namespace GarageRev.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Create([Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas")] Carros carros, IFormFileCollection files)
         {
             ///process the image
@@ -77,7 +79,33 @@ namespace GarageRev.Controllers
             ///         -> save the file on the disk
             List<Fotografias> fotoscarro = new List<Fotografias>();
 
-            if (!files.Any())
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    //add advertisement data to database
+                    _context.Add(carros);
+                    //commit
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception)
+                {
+                    // if the code arrives here, something wrong has appended
+                    // we must fix the error, or at least report it
+
+                    // add a model error to our code
+                    ModelState.AddModelError("", "Something went wrong. I can not store data on database");
+                    // eventually, before sending control to View
+                    // report error. For instance, write a message to the disc
+                    // or send an email to admin              
+
+                    //// send control to View
+                    return RedirectToAction("Index", "Home");
+                    //return View(advertisement);
+                }
+            }
+
+            if (files.Count == 0)
             {
                 //nao existe fotos de carros
                 fotoscarro.Add(new Fotografias { CarroFK = carros.Id, FotoPath = "noCar.png" });
@@ -113,12 +141,11 @@ namespace GarageRev.Controllers
                     }
 
                 }
+                _context.Fotografias.AddRange(fotoscarro);
+                await _context.SaveChangesAsync();
             }
-            _context.Fotografias.AddRange(fotoscarro);
-            await _context.SaveChangesAsync();
 
-
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Carros/Edit/5

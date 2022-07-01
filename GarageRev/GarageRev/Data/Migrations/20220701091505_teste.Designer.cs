@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageRev.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220628174101_updatenonomeatrib")]
-    partial class updatenonomeatrib
+    [Migration("20220701091505_teste")]
+    partial class teste
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -530,8 +530,8 @@ namespace GarageRev.Data.Migrations
                     b.Property<string>("CarroFav")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DataNascimento")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DataNascimento")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -581,14 +581,14 @@ namespace GarageRev.Data.Migrations
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "d3c7af11-4598-4af5-aa3e-d99e65545d0e",
+                            ConcurrencyStamp = "75cf5ff1-d3bc-4e46-a680-b89291e9a048",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         },
                         new
                         {
                             Id = "a",
-                            ConcurrencyStamp = "d8f27e0a-2d12-4e58-aa9a-029925a6b601",
+                            ConcurrencyStamp = "dffddd8c-882b-4f03-96f1-b55324064093",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GarageRev.Data.Migrations
 {
-    public partial class UpdatedDatabaseNoPhoto : Migration
+    public partial class fixmigracoes : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -132,6 +132,15 @@ namespace GarageRev.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "a", "f7dae83d-0d6f-4874-9724-872f637d287b", "Admin", "ADMIN" },
+                    { "c", "2aa22c5e-e9ab-4861-8f58-89caa7bf0848", "Cliente", "CLIENTE" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Carros",
                 columns: new[] { "Id", "Ano", "CilindradaouCapacidadeBateria", "Combustivel", "Marca", "Modelo", "Nportas", "Potencia", "TipoCaixa", "Versao" },
                 values: new object[,]
@@ -163,6 +172,16 @@ namespace GarageRev.Data.Migrations
                     { 25, 2015, 999, "Petrol", "Peugeot", "208 Facelift", "5", 68, "5 speed Manual", "1.0 PureTech 68 " },
                     { 26, 2019, 1461, "Diesel", "Renault", "Clio 5", "5", 85, "6 speed Manual", "Blue DCi 85" },
                     { 27, 2013, 6262, "Hybrid/Petrol", "Ferrari", "La Ferrari", "2", 800, "7 speed Sequential", "F70 F150 HY-KERS System 963HP" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categorias",
+                columns: new[] { "Id", "NomeCat" },
+                values: new object[,]
+                {
+                    { 1, "Elétrico" },
+                    { 2, "Desportivo" },
+                    { 3, "Citadino" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -205,6 +224,16 @@ namespace GarageRev.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Utilizadores");
+
+            migrationBuilder.DeleteData(
+                table: "AspNetRoles",
+                keyColumn: "Id",
+                keyValue: "a");
+
+            migrationBuilder.DeleteData(
+                table: "AspNetRoles",
+                keyColumn: "Id",
+                keyValue: "c");
         }
     }
 }
