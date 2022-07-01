@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GarageRev.Models
 {
@@ -45,7 +46,9 @@ namespace GarageRev.Models
         /// Carro favorito do Utilizador
         /// </summary>
         [Display(Name = "Carro Favorito")]
-        public string CarroFav { get; set; }
+        [ForeignKey(nameof(Carro))]
+        public int CarroFavorito { get; set; }
+        public Carros Carro { get; set; }
         public ICollection<Reviews> Reviews { get; set; }
     }
 }
