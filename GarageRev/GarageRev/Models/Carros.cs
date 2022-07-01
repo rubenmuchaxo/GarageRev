@@ -13,6 +13,7 @@ namespace GarageRev.Models
             Fotografias = new HashSet<Fotografias>();
             Categorias = new HashSet<Categorias>();
             Reviews = new HashSet<Reviews>();
+            Utilizadores = new HashSet<Utilizadores>();
         }
 
         /// <summary>
@@ -78,6 +79,7 @@ namespace GarageRev.Models
         public ICollection<Fotografias> Fotografias { get; set; }
         public ICollection<Categorias> Categorias { get; set; }
         public ICollection<Reviews> Reviews { get; set; }
+        public ICollection<Utilizadores> Utilizadores { get; set; }
 
     }
 }
