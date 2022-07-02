@@ -73,30 +73,9 @@
                 @Html.DisplayFor(modelItem => item.Nportas)
             </td>
             <td>
-                @*<a href="~/Photos/@item.Fotografia" target="_blank">*@
-                @*@Html.DisplayFor(modelItem => item.Photo)*@
-               @*<img src="~/Photos/@item.Fotografia" *@
-@*               alt="photo of Car: @Html.DisplayFor(modelItem => item.Modelo)" 
-               title="@item.Modelo" 
-               height="50" />
-           </a>*@
+              
             </td>
             <td>
-                <a asp-controller="Reviews" asp-action="Index">Reviews</a> |
-=========
->>>>>>>>> Temporary merge branch 2
-                @*<a href="~/Photos/@item.Fotografia" target="_blank">*@
-                @*@Html.DisplayFor(modelItem => item.Photo)*@
-               @*<img src="~/Photos/@item.Fotografia" *@
-@*               alt="photo of Car: @Html.DisplayFor(modelItem => item.Modelo)" 
-               title="@item.Modelo" 
-               height="50" />
-           </a>*@
-            </td>
-            <td>
-                <a asp-controller="Reviews" asp-action="Index">Reviews</a> |
-=========
->>>>>>>>> Temporary merge branch 2
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
