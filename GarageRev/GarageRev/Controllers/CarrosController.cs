@@ -67,6 +67,7 @@ namespace GarageRev.Controllers
         /// <param name="comentario"> conteudo da review</param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> ApresentaReview(int Id, string comentario)
         {
             var utilizador = _context.Utilizadores.Where(u => u.IdUtilizador == _userManager.GetUserId(User)).FirstOrDefault();
@@ -87,7 +88,6 @@ namespace GarageRev.Controllers
                 return RedirectToAction(nameof(Details), new { Id = Id });
             }
         }
-
         // GET: Carros/Create
         public IActionResult Create()
         {
@@ -128,8 +128,6 @@ namespace GarageRev.Controllers
                     }
                 }
             }
-
-
 
             if (ChoosenCategory.Count == 0)
             {
@@ -218,11 +216,12 @@ namespace GarageRev.Controllers
             }
             return View(carros);
         }
-
+        
         // POST: Carros/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles ="Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas")] Carros carros)
         {
@@ -273,6 +272,7 @@ namespace GarageRev.Controllers
         }
 
         // POST: Carros/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
