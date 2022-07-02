@@ -6,7 +6,7 @@
 
 <h1>Utilizadores</h1>
 
-@if (User.IsInRole("Admin")) {
+@if (User.Identity.IsAuthenticated) {
     <p>
         <a asp-action="Create">Adicionar Novo Utilizador</a>
     </p>
@@ -26,10 +26,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.DataNascimento)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CarroFavorito)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -47,11 +43,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DataNascimento)
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.CarroFavorito)
-            </td>
-            <td>
-            <td>@if (User.IsInRole("Admin")) {
+            <td>@if (User.Identity.IsAuthenticated) {
                     <a asp-action="Edit" asp-route-id="@item.Id">Editar |</a>
                     <a asp-action = "Delete" asp-route-id = "@item.Id" > Apagar |</a>
                     <a asp-action="Details" asp-route-id="@item.Id">Ver Detalhes</a> 

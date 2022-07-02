@@ -22,10 +22,11 @@ namespace GarageRev.Controllers
         /// </summary>
         private readonly UserManager<IdentityUser> _userManager;
 
-        public CarrosController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
+        public CarrosController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
+            _userManager = userManager;
         }
 
         // GET: Carros
