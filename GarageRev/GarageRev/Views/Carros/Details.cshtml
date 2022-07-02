@@ -5,7 +5,7 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Detalhes</h1>
 
 <div>
     <h4>Carros</h4>
@@ -101,10 +101,7 @@
         <span style="font-weight:bold; font-size:medium">  Data: </span>@item.Data <br />
     </div>
     <br />
-    <div>
-        <button class="btn btn-primary" onclick="location.href = '@Url.Action("Delete", "Reviews", new { id = item.Id })'">Eliminar</button>
-    </div><br />
-            @*if (item.Utilizador.Email == User.Identity.Name) {*@
+            @*if (item.Utilizador.Email == User.Identity.Name || User.IsInRole("Admin") {*@
                 <div>
         <button class="btn btn-primary" onclick="location.href = '@Url.Action("Edit", "Reviews", new { Id = item.Id })'">Editar</button>
         <button class="btn btn-primary" onclick="location.href = '@Url.Action("Delete", "Reviews", new { Id = item.Id })'">Eliminar</button>
@@ -112,6 +109,8 @@
             }
    </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if (User.IsInRole("Admin")) {
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    }
+    <a asp-action="Index">Voltar à pàgina anterior</a>
 </div>
