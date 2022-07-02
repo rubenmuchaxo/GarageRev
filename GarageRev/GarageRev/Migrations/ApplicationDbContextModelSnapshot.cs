@@ -601,14 +601,14 @@ namespace GarageRev.Migrations
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "b41ec248-7506-44c3-8815-0e13c26f3d5c",
+                            ConcurrencyStamp = "400c6c8b-170b-452e-84ab-be9418092b57",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         },
                         new
                         {
                             Id = "a",
-                            ConcurrencyStamp = "27b6a18a-9d60-42a3-8ec3-fb23f34e5383",
+                            ConcurrencyStamp = "e829b3a3-1937-473d-9f31-a8df6d1ced97",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

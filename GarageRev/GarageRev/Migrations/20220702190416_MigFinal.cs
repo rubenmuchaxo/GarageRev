@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GarageRev.Migrations
 {
-    public partial class FixTextetemestamerdatoda : Migration
+    public partial class MigFinal : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -263,8 +263,8 @@ namespace GarageRev.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "a", "27b6a18a-9d60-42a3-8ec3-fb23f34e5383", "Admin", "ADMIN" },
-                    { "c", "b41ec248-7506-44c3-8815-0e13c26f3d5c", "Cliente", "CLIENTE" }
+                    { "a", "e829b3a3-1937-473d-9f31-a8df6d1ced97", "Admin", "ADMIN" },
+                    { "c", "400c6c8b-170b-452e-84ab-be9418092b57", "Cliente", "CLIENTE" }
                 });
 
             migrationBuilder.InsertData(
