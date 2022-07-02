@@ -4,6 +4,7 @@ using GarageRev.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageRev.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220702100417_atributoDataReview_IdUtilizador")]
+    partial class atributoDataReview_IdUtilizador
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -606,14 +608,14 @@ namespace GarageRev.Data.Migrations
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "d30e6aa5-d9ca-4499-9c1e-c31e57128da3",
+                            ConcurrencyStamp = "dac58c5f-4bd0-450e-af20-964b58399e11",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         },
                         new
                         {
                             Id = "a",
-                            ConcurrencyStamp = "1ca84710-d2a9-4266-8939-8f72d73a0d70",
+                            ConcurrencyStamp = "fc2f4eee-0124-4b50-ac8b-c9feba6dc5ed",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
