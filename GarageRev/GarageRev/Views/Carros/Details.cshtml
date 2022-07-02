@@ -5,7 +5,7 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Detalhes</h1>
 
 <div>
     <h4>Carros</h4>
@@ -74,12 +74,20 @@
     </dl><form asp-action="ApresentaReview">
         <input type=hidden name="Id" value="@Model.Id" />
         <span>Review:</span><br />
-    
-        <textarea required name="comentario" style="resize:none; width:900px; height:100px;"></textarea><br />
+        @if (!User.IsInRole("Cliente"))
+        {
+            <div width:36%">
+            <textarea disabled style="resize:none; width:900px; height:100px;">Entre na conta de cliente para submeter uma review.</textarea><br />
+            </div><br /><br />
+        }
+        @if(User.IsInRole("Cliente")){
+            <textarea required name="comentario" style="resize:none; width:900px; height:100px;"></textarea><br />
         <div style="float: right; width:36%">
             <input type="submit" value="Adicionar Review" class="btn btn-primary" />
-        </div><br /><br />
-        </form>
+            </div><br /><br />
+        }
+        
+    </form>
         
 </div>
     <div id="comentarios" style="width:80%">
@@ -93,10 +101,7 @@
         <span style="font-weight:bold; font-size:medium">  Data: </span>@item.Data <br />
     </div>
     <br />
-    <div>
-        <button class="btn btn-primary" onclick="location.href = '@Url.Action("Delete", "Reviews", new { id = item.Id })'">Eliminar</button>
-    </div><br />
-            @*if (item.Utilizador.Email == User.Identity.Name) {*@
+            @*if (item.Utilizador.Email == User.Identity.Name || User.IsInRole("Admin") {*@
                 <div>
         <button class="btn btn-primary" onclick="location.href = '@Url.Action("Edit", "Reviews", new { Id = item.Id })'">Editar</button>
         <button class="btn btn-primary" onclick="location.href = '@Url.Action("Delete", "Reviews", new { Id = item.Id })'">Eliminar</button>
@@ -112,6 +117,8 @@
     </div>
  
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if (User.IsInRole("Admin")) {
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    }
+    <a asp-action="Index">Voltar à pàgina anterior</a>
 </div>

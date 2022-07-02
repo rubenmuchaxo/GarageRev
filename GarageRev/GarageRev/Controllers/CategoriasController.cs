@@ -1,5 +1,6 @@
 ﻿using GarageRev.Data;
 using GarageRev.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -39,11 +40,12 @@ namespace GarageRev.Controllers
         }
 
         // GET: Categorias/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
-
+        [Authorize(Roles="Admin")]
         // POST: Categorias/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -61,6 +63,7 @@ namespace GarageRev.Controllers
         }
 
         // GET: Categorias/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -83,6 +86,7 @@ namespace GarageRev.Controllers
         // POST: Categorias/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,NomeCat")] Categorias categorias)
@@ -139,6 +143,7 @@ namespace GarageRev.Controllers
         }
 
         // GET: Categorias/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -157,6 +162,7 @@ namespace GarageRev.Controllers
         }
 
         // POST: Categorias/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

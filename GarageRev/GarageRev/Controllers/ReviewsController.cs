@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GarageRev.Data;
 using GarageRev.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GarageRev.Controllers
 {
@@ -47,6 +48,7 @@ namespace GarageRev.Controllers
         }
 
         // GET: Reviews/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["CarroFK"] = new SelectList(_context.Carros, "Id", "Id");
@@ -58,6 +60,7 @@ namespace GarageRev.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Comentario,UtilizadorFK,CarroFK")] Reviews reviews)
         {
@@ -73,6 +76,7 @@ namespace GarageRev.Controllers
         }
 
         // GET: Reviews/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -97,6 +101,7 @@ namespace GarageRev.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Comentario,UtilizadorFK,CarroFK")] Reviews reviews)
         {
@@ -154,6 +159,7 @@ namespace GarageRev.Controllers
         }
 
         // GET: Reviews/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -174,6 +180,7 @@ namespace GarageRev.Controllers
         }
 
         // POST: Reviews/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
