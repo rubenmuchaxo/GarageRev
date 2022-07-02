@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GarageRev.Models
 {
@@ -16,6 +17,12 @@ namespace GarageRev.Models
         /// </summary>
         [Key]
         public int Id { get; set; }
+
+        /// <summary>
+        /// ligação entre os Utilizadores e a tabela de Autenticação
+        /// </summary>
+        public string IdUtilizador { get; set; }
+
         /// <summary>
         /// Nome do Utilizador
         /// </summary>
@@ -45,7 +52,9 @@ namespace GarageRev.Models
         /// Carro favorito do Utilizador
         /// </summary>
         [Display(Name = "Carro Favorito")]
-        public string CarroFav { get; set; }
+        [ForeignKey(nameof(Carros))]
+        public int CarroFavorito { get; set; }
+        public Carros Carros { get; set; }
         public ICollection<Reviews> Reviews { get; set; }
     }
 }

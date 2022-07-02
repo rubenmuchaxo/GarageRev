@@ -10,9 +10,9 @@ namespace GarageRev.Models
 
         public Carros()
         {
-            Fotografias = new HashSet<Fotografias>();
             Categorias = new HashSet<Categorias>();
             Reviews = new HashSet<Reviews>();
+            Utilizadores = new HashSet<Utilizadores>();
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace GarageRev.Models
         [Required]
         public string Modelo { get; set; }
         /// <summary>
-        /// Versao de cada Carro
+        /// Versão de cada Carro
         /// </summary>
         [Required]
         [Display(Name = "Versão")]
@@ -48,14 +48,13 @@ namespace GarageRev.Models
         [Required]
         public int Ano { get; set; }
         /// <summary>
-        /// CilindradaouCapacidadeBateria, Cilindrada em cm3, de cada Carro, eCapacidade de bateria em kWh 
+        /// Cilindrada, em cm3, de cada Carro ou bateria em kwh
         /// </summary>
         [Required]
-        [Display(Name = "Cilindrada/Bateria")]
+        [Display(Name = "Cilindrada/Bateria(cm3/kWh")]
         public int CilindradaouCapacidadeBateria { get; set; }
-        
         /// <summary>
-        /// Potencia, em PS, de cada Carro
+        /// Potencia, em cv, de cada Carro
         /// </summary>
         [Required]
         [Display(Name = "Potência")]
@@ -72,10 +71,15 @@ namespace GarageRev.Models
         [Required]
         [Display(Name = "Número de Portas")]
         public string Nportas { get; set; }
+        /// <summary>
+        /// Fotografias de cada carro
+        /// </summary>
+        /// 
+        public string Foto { get; set; }
 
-        public ICollection<Fotografias> Fotografias { get; set; }
         public ICollection<Categorias> Categorias { get; set; }
         public ICollection<Reviews> Reviews { get; set; }
+        public ICollection<Utilizadores> Utilizadores { get; set; }
 
     }
 }

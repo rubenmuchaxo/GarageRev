@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using GarageRev.Data;
+using GarageRev.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using GarageRev.Data;
-using GarageRev.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GarageRev.Controllers
 {
@@ -14,16 +17,26 @@ namespace GarageRev.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        /// <summary>
+        /// variavel que recolhe os dados da pessoa que se autenticou
+        /// </summary>
+        private readonly UserManager<IdentityUser> _userManager;
 
-
-        public CarrosController(ApplicationDbContext context)
+        public CarrosController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Carros
         public async Task<IActionResult> Index()
         {
+            /* execute the db command
+             * select *
+             * from Advertisements
+             * 
+             * and send Data to View
+             */
             return View(await _context.Carros.ToListAsync());
         }
 
@@ -36,6 +49,8 @@ namespace GarageRev.Controllers
             }
 
             var carros = await _context.Carros
+                .Include(c => c.Categorias)
+                //.Include(f => f.Reviews)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (carros == null)
             {
@@ -43,6 +58,35 @@ namespace GarageRev.Controllers
             }
 
             return View(carros);
+        }
+
+        /// <summary>
+        /// Apresentar as reviews
+        /// falta parte de autenticação para poder verificar as reviews
+        /// </summary>
+        /// <param name="idCarro">Id do Carro respetivo à review</param>
+        /// <param name="comentario"> conteudo da review</param>
+        /// <returns></returns>
+        public async Task<IActionResult> ApresentaReview(int idCarro, string comentario)
+        {
+            var utilizador = _context.Utilizadores.Where(u => u.IdUtilizador == _userManager.GetUserId(User)).FirstOrDefault();
+
+            {
+                //variavel que contem os dados do carro, review e utilizador
+                var review = new Reviews
+                {
+                    CarroFK = idCarro,
+                    Comentario = comentario.Replace("\r\n", "<br />"),
+                    Data = DateTime.Now,
+                    Utilizador = utilizador
+                };
+                //adiciona a review à Base de Dados
+                _context.Reviews.Add(review);
+                //Guarda as alterações na Base de Dados
+                await _context.SaveChangesAsync();
+                //redirecionar para a página de detalhes de carro
+                return RedirectToAction(nameof(Details), new { id = idCarro });
+            }
         }
 
         // GET: Carros/Create
@@ -56,7 +100,7 @@ namespace GarageRev.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas")] Carros carros) //, IFormFile newFotoCarro
+        public async Task<IActionResult> Create([Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas,Foto")] Carros carros, IFormFile fotografia, ICollection<String> ChoosenCategory)
         {
             ///process the image
             ///if file is null
@@ -69,60 +113,94 @@ namespace GarageRev.Controllers
             ///         -> add the filename to vet data
             ///         -> save the file on the disk
 
-            /*if (newFotoCarro == null)
+            //vai percorrer todas as strings category selecionadas na collection choosen category
+            foreach (String category in ChoosenCategory)
             {
-                carros.Fotografia = "noCar.png";
+
+                //vai percorrer as categorias ja existentes
+                foreach (Categorias category2 in _context.Categorias)
+                {
+                    //se a categoria selecionada ja existir na base de dados
+                    if (category2.NomeCat == category)
+                    {
+                        //adicionamos a categoria selecionada ao carro
+                        carros.Categorias.Add(category2);
+                    }
+                }
             }
-            else if (!(newFotoCarro.ContentType == "image/jpeg" || newFotoCarro.ContentType == "image/pen"))
+
+
+
+            if (ChoosenCategory.Count == 0)
             {
-                //error message
-                ModelState.AddModelError("", "Por favor selecione uma fotografia.");
-                //resend control to view with data provided by the user
+                ModelState.AddModelError("", "Please choose at least a category.");
+                return View(carros);
+            }
+
+            if (fotografia == null)
+            {
+                ModelState.AddModelError("", "Please insert an image with a valid format(png/jpeg).");
+                return View(carros);
+            }
+            else if (!(fotografia.ContentType == "image/jpeg" || fotografia.ContentType == "image/png" || fotografia.ContentType == "image/jpg"))
+            {
+                //write the error message
+                ModelState.AddModelError("", "Please choose a valid format(png/jpeg)");
+                //resend Control to View, with data provided by user
                 return View(carros);
             }
             else
             {
-                //define image name
                 Guid g;
                 g = Guid.NewGuid();
-                string imageName = carros.Marca + "_" + carros.Modelo + "_" + carros.Versao + "_" + g.ToString();
-                string extensionImage = Path.GetExtension(newFotoCarro.FileName).ToLower();
-                imageName += extensionImage;
-                //add image name to vet data
-                carros.Fotografia = imageName;
+                string imageName = carros.Foto + "_" + g.ToString();
+                string extensionOfImage = Path.GetExtension(fotografia.FileName).ToLower();
+                imageName += extensionOfImage;
+                carros.Foto = imageName;
+
             }
 
-            //validate if data provided by user is good
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+
             if (ModelState.IsValid)
             {
                 try
-                {//add vet data to database
+                {
+                    //add advertisement data to database
                     _context.Add(carros);
-                    //commit (DB)
+                    //commit
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception)
                 {
-                    //if the code arrives here, some exception was caught -> error
-                    //add a model error 
-                    ModelState.AddModelError("", "Something went wrong. Unable to store data");
-                    return View(carros);
+                    // if the code arrives here, something wrong has appended
+                    // we must fix the error, or at least report it
+
+                    // add a model error to our code
+                    ModelState.AddModelError("", "Something went wrong. I can not store data on database");
+                    // eventually, before sending control to View
+                    // report error. For instance, write a message to the disc
+                    // or send an email to admin              
+
+                    //// send control to View
+                    return RedirectToAction("Index", "Home");
+                    //return View(advertisement);
                 }
+                // save image file to disk
+                //ask the server what address it wants to use
+                string addressToStoreFile = _webHostEnvironment.WebRootPath;
+                string newimglocation = Path.Combine(addressToStoreFile, "Photos", carros.Foto);
 
                 //save image file to disk
-                if (newFotoCarro != null)
-                {
-                    //ask the server what address it wants to use
-                    string addressToStoreFile = _webHostEnvironment.WebRootPath;
-                    string newImageLocation = Path.Combine(addressToStoreFile, "Photos", carros.Fotografia);
+                using var stream = new FileStream(newimglocation, FileMode.Create);
+                await fotografia.CopyToAsync(stream);
 
-                    //save image file to disk
-                    using var stream = new FileStream(newImageLocation, FileMode.Create);
-                    await newFotoCarro.CopyToAsync(stream);
-                }
-                return RedirectToAction(nameof(Index));
-            }*/
-            return View(carros);
+                return RedirectToAction("Index", "Home");
+                //return RedirectToAction(nameof(Index));
+
+            }
+
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Carros/Edit/5
@@ -130,17 +208,14 @@ namespace GarageRev.Controllers
         {
             if (id == null)
             {
-                return RedirectToAction("Index");
+                return NotFound();
             }
 
             var carros = await _context.Carros.FindAsync(id);
             if (carros == null)
             {
-                return RedirectToAction("Index");
+                return NotFound();
             }
-
-            HttpContext.Session.SetInt32("CarroID", carros.Id);
-
             return View(carros);
         }
 
@@ -149,35 +224,93 @@ namespace GarageRev.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas")] Carros carros)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas,Foto,Categorias")] Carros carros, IFormFile fotografia, ICollection<String> ChoosenCategory,Categorias categorias)
         {
             if (id != carros.Id)
             {
                 return NotFound();
             }
 
-            /*antes de editar os dados do carro, é necessário validar os dados:
-             *  -ler a variável de sessão
-             *  -comparar com os dados que o browser fornece
-             *  - se não forem iguais é problemático
-            */
-            var CarroIDPrevStored = HttpContext.Session.GetInt32("CarroID");
 
-            //se esta var for nula:
-            //  -o método da app está a ser acedido por ferramentas externas
-            //  -está a demorar mais tempo que o suposto
-            if (CarroIDPrevStored == null)
+            //Remove todas as categorias ja selecionadas
+
+
+            
+
+
+
+
+
+
+            // foreach adiciona as categorias selecionadas
+
+            //vai percorrer todas as strings category selecionadas na collection choosen category
+            foreach (String category in ChoosenCategory)
             {
-                ModelState.AddModelError("", "Excedeu o tempo permitido.");
-                //return RedirectToAction("Index");
+
+                //vai percorrer as categorias ja existentes
+                foreach (Categorias category2 in _context.Categorias)
+                {
+                    //se a categoria selecionada ja existir na base de dados
+                    if (category2.NomeCat == category)
+                    {
+                        //adicionamos a categoria selecionada ao carro
+                        carros.Categorias.Add(category2);
+                    }
+                }
+            }
+
+
+            // avalia se o array com a lista de categorias escolhidas associadas ao anime está vazio ou não
+            if (ChoosenCategory.Count == 0)
+            {
+                ModelState.AddModelError("", "Please choose at least a category.");
                 return View(carros);
             }
 
-            if (CarroIDPrevStored != carros.Id)
-            {   //Errado -> redirecionar para index
-                return RedirectToAction("Index");
+
+
+            //se a foto nao for nula, realiza os processo
+            if (fotografia != null)
+            {
+                if (!(fotografia.ContentType == "image/jpeg" || fotografia.ContentType == "image/png" || fotografia.ContentType == "image/jpg"))
+                {
+                    //write the error message
+                    ModelState.AddModelError("", "Please choose a valid format(png/jpeg)");
+                    //resend Control to View, with data provided by user
+                    return View(carros);
+                }
+                else
+                {
+                    Guid g;
+                    g = Guid.NewGuid();
+                    string imageName = carros.Marca + "_" +carros.Modelo + "_"+carros.Versao + "_" + g.ToString();
+                    string extensionOfImage = Path.GetExtension(fotografia.FileName).ToLower();
+                    imageName += extensionOfImage;
+                    carros.Foto = imageName;
+                }
+
+                string addressToStoreFile = _webHostEnvironment.WebRootPath;
+                string newimglocation = Path.Combine(addressToStoreFile, "Photos", carros.Foto);
+
+                //save image file to disk
+                using var stream = new FileStream(newimglocation, FileMode.Create);
+                await fotografia.CopyToAsync(stream);
+
+
+
 
             }
+            else
+            {
+                Carros carros1 = _context.Carros.Find(carros.Id);
+
+                _context.Entry<Carros>(carros1).State = EntityState.Detached;  
+
+
+                carros.Foto = carros1.Foto;
+            }
+
 
             if (ModelState.IsValid)
             {

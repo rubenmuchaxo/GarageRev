@@ -19,6 +19,11 @@ namespace GarageRev.Models
         [Required]
         public string Comentario { get; set; }
 
+        /// <summary>
+        /// Data que o utilizador submeteu a review
+        /// </summary>
+        public DateTime Data { get; set; }
+
         [ForeignKey(nameof(Utilizador))]
         public int UtilizadorFK { get; set; }
         public Utilizadores Utilizador { get; set; }

@@ -1,18 +1,164 @@
+/*Trabalho Realizado por João Godinho nº21883*/
+
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
+
+/*Imagem para dropdown*/
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/*Lista do Dropdown (Posição do texto está no loginpartial) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 50px;
+    z-index: auto;
+    transform: translateX(-45%);
+}
+
+/*Aparece a lista com hover no imagem*/
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/*Aparece selecionado a opção com o hover*/
+.dropdown-content form:hover {
+    display: block;
+    background-color: lightgray;
+}
+
+/*---------*/
+
+.multiselect {
+    width: 100%;
+}
+
+.selectBox {
+    position: relative;
+}
+
+    .selectBox select {
+        width: 100%;
+    }
+
+.overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+/*Background das opções das categorias*/
+#mySelectOptions {
+    display: none;
+    border: 0.5px #7c7c7c solid;
+    background-color: #ffffff;
+    max-height: 150px;
+    overflow-y: scroll;
+}
+
+    /**/
+    #mySelectOptions label {
+        display: block;
+        font-weight: normal;
+        display: block;
+        white-space: nowrap;
+        min-height: 1.2em;
+        background-color: #ffffff00;
+        padding: 0 2.25rem 0 .75rem;
+        /* padding: .375rem 2.25rem .375rem .75rem; */
+    }
+
+        /*Hover das categorias dos livros*/
+        #mySelectOptions label:hover {
+            background-color: #1e90ff;
+        }
+
+/***********************/
+
+#checkboxes label {
+    float: left;
+}
+
+#checkboxes ul {
+    margin: 0;
+    list-style: none;
+    float: left;
+}
+
+/**********************/
+
+
+div.Carros {
+    position: relative;
+    width: 200px;
+    height: 250px;
+    float: left;
+    margin-right: 40px;
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+/**/
+img.Carros {
+    border-radius: 15px;
+    width: 225px;
+    height: 225px;
+    border: 1px solid black;
+    object-fit: fill;
+}
+
+div.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 225px;
+    width: 225px;
+    opacity: 0;
+    transition: .5s ease;
+    border-radius: 15px;
+    background-color: deepskyblue;
+    cursor: pointer;
+}
+
+div.text {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-weight: bold;
+}
+
+/**/
+div.Carros:hover .overlay {
+    opacity: 0.70;
+}
+
+

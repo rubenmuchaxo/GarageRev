@@ -34,7 +34,7 @@ namespace GarageRev.Data.Migrations
 
                     b.HasIndex("CategoriasId");
 
-                    b.ToTable("CarrosCategorias");
+                    b.ToTable("CarrosCategorias", (string)null);
                 });
 
             modelBuilder.Entity("GarageRev.Models.Carros", b =>
@@ -53,6 +53,9 @@ namespace GarageRev.Data.Migrations
 
                     b.Property<string>("Combustivel")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Foto")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Marca")
@@ -80,7 +83,7 @@ namespace GarageRev.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Carros");
+                    b.ToTable("Carros", (string)null);
 
                     b.HasData(
                         new
@@ -89,6 +92,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2017,
                             CilindradaouCapacidadeBateria = 42,
                             Combustivel = "Electric",
+                            Foto = "bmw_i3_120ah.jpg",
                             Marca = "BMW",
                             Modelo = "i3",
                             Nportas = "5",
@@ -102,6 +106,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2018,
                             CilindradaouCapacidadeBateria = 42,
                             Combustivel = "Electric",
+                            Foto = "bmw_i3_s120ah.jpg",
                             Marca = "BMW",
                             Modelo = "i3",
                             Nportas = "5",
@@ -115,6 +120,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 84,
                             Combustivel = "Electric",
+                            Foto = "bmw_i4_M50.jpg",
                             Marca = "BMW",
                             Modelo = "i4",
                             Nportas = "5",
@@ -128,6 +134,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 84,
                             Combustivel = "Electric",
+                            Foto = "BMW_i4_eDrive40.jpg",
                             Marca = "BMW",
                             Modelo = "i4",
                             Nportas = "5",
@@ -141,6 +148,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2020,
                             CilindradaouCapacidadeBateria = 1499,
                             Combustivel = "Petrol",
+                            Foto = "bmw_F40 Serie 1_116i.jpg",
                             Marca = "BMW",
                             Modelo = "F40 serie 1",
                             Nportas = "5",
@@ -154,6 +162,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 1499,
                             Combustivel = "Petrol",
+                            Foto = "bmw_F40 Serie 1_118i.jpg",
                             Marca = "BMW",
                             Modelo = "F40 serie 1",
                             Nportas = "5",
@@ -167,6 +176,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2020,
                             CilindradaouCapacidadeBateria = 1998,
                             Combustivel = "Petrol",
+                            Foto = "bmw_F40 Serie 1_128i.jpg",
                             Marca = "BMW",
                             Modelo = "F40 serie 1",
                             Nportas = "5",
@@ -180,6 +190,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2019,
                             CilindradaouCapacidadeBateria = 1998,
                             Combustivel = "Petrol",
+                            Foto = "bmw_F40 Serie 1_m135i.jpg",
                             Marca = "BMW",
                             Modelo = "F40 serie 1",
                             Nportas = "5",
@@ -193,6 +204,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 1998,
                             Combustivel = "Petrol",
+                            Foto = "bmw_G02_X4 LCI.jpg",
                             Marca = "BMW",
                             Modelo = "G02 X4 LCI",
                             Nportas = "5",
@@ -206,6 +218,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 1499,
                             Combustivel = "Petrol",
+                            Foto = "bmw_f44 Serie2 gran Coupe_218i.jpg",
                             Marca = "BMW",
                             Modelo = "F44 serie 2 Gran Coupe",
                             Nportas = "4",
@@ -219,6 +232,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2020,
                             CilindradaouCapacidadeBateria = 1998,
                             Combustivel = "Petrol",
+                            Foto = "bmw_g21 serie3 touring_318i auto.jpg",
                             Marca = "BMW",
                             Modelo = "G21 serie 3 Touring",
                             Nportas = "5",
@@ -232,6 +246,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 1998,
                             Combustivel = "Petrol",
+                            Foto = "bmw g23 serie 4 cabrio.jpg",
                             Marca = "BMW",
                             Modelo = "G23 serie 4 Cabrio",
                             Nportas = "2",
@@ -245,6 +260,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2022,
                             CilindradaouCapacidadeBateria = 999,
                             Combustivel = "Petrol",
+                            Foto = "ford_fiesta.jpg",
                             Marca = "Ford",
                             Modelo = "Fiesta",
                             Nportas = "5",
@@ -258,6 +274,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2017,
                             CilindradaouCapacidadeBateria = 988,
                             Combustivel = "Petrol",
+                            Foto = "honda_civic.jpg",
                             Marca = "Honda",
                             Modelo = "Civic 10",
                             Nportas = "5",
@@ -271,6 +288,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2020,
                             CilindradaouCapacidadeBateria = 2268,
                             Combustivel = "Diesel",
+                            Foto = "mitsubishi_l200.jpg",
                             Marca = "Mitsubishi",
                             Modelo = "L200 Club Cab ",
                             Nportas = "2",
@@ -284,6 +302,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2020,
                             CilindradaouCapacidadeBateria = 1193,
                             Combustivel = "Petrol",
+                            Foto = "Mitsubishi-Space-Star.jpeg",
                             Marca = "Mitsubishi",
                             Modelo = "Space Star ",
                             Nportas = "5",
@@ -297,6 +316,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2019,
                             CilindradaouCapacidadeBateria = 999,
                             Combustivel = "Petrol",
+                            Foto = "nissan_micra k14.jpg",
                             Marca = "Nissan",
                             Modelo = "Micra K14  ",
                             Nportas = "5",
@@ -310,6 +330,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2017,
                             CilindradaouCapacidadeBateria = 40,
                             Combustivel = "Electric",
+                            Foto = "nissan-leaf.jpg",
                             Marca = "Nissan",
                             Modelo = "Leaf 2",
                             Nportas = "5",
@@ -323,6 +344,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 1332,
                             Combustivel = "Petrol",
+                            Foto = "nissan_qashqai_J12.jpg",
                             Marca = "Nissan",
                             Modelo = "Qashqai J12",
                             Nportas = "5",
@@ -336,6 +358,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2018,
                             CilindradaouCapacidadeBateria = 3799,
                             Combustivel = "Petrol",
+                            Foto = "nissan_GTR_Nismo.jpg",
                             Marca = "Nissan",
                             Modelo = "GT R",
                             Nportas = "3",
@@ -349,6 +372,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 1998,
                             CilindradaouCapacidadeBateria = 2568,
                             Combustivel = "Petrol",
+                            Foto = "nissan_r33_Skyline.jpg",
                             Marca = "Nissan",
                             Modelo = "R33 Skyline ",
                             Nportas = "4",
@@ -362,6 +386,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2019,
                             CilindradaouCapacidadeBateria = 1499,
                             Combustivel = "Diesel",
+                            Foto = "opel_corsa_f.jpg",
                             Marca = "Opel",
                             Modelo = "Corsa F",
                             Nportas = "5",
@@ -375,6 +400,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2018,
                             CilindradaouCapacidadeBateria = 998,
                             Combustivel = "Petrol",
+                            Foto = "peugeot_108.jpg",
                             Marca = "Peugeot",
                             Modelo = "108",
                             Nportas = "3",
@@ -388,6 +414,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 1499,
                             Combustivel = "Diesel",
+                            Foto = "peugeot_508 II sw.jpg",
                             Marca = "Peugeot",
                             Modelo = "508 II SW",
                             Nportas = "5",
@@ -401,6 +428,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2015,
                             CilindradaouCapacidadeBateria = 999,
                             Combustivel = "Petrol",
+                            Foto = "peugeot_208_facelift.jpg",
                             Marca = "Peugeot",
                             Modelo = "208 Facelift",
                             Nportas = "5",
@@ -414,6 +442,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2019,
                             CilindradaouCapacidadeBateria = 1461,
                             Combustivel = "Diesel",
+                            Foto = "renault_clio 5.jpg",
                             Marca = "Renault",
                             Modelo = "Clio 5",
                             Nportas = "5",
@@ -427,6 +456,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2013,
                             CilindradaouCapacidadeBateria = 6262,
                             Combustivel = "Hybrid/Petrol",
+                            Foto = "ferrari_Laferrari_f70.jpg",
                             Marca = "Ferrari",
                             Modelo = "La Ferrari",
                             Nportas = "2",
@@ -449,28 +479,34 @@ namespace GarageRev.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categorias");
-                });
+                    b.ToTable("Categorias", (string)null);
 
-            modelBuilder.Entity("GarageRev.Models.Fotografias", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CarroFK")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FotoPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarroFK");
-
-                    b.ToTable("Fotografias");
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            NomeCat = "Elétrico"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            NomeCat = "Desportivo"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            NomeCat = "Citadino"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            NomeCat = "SUV"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            NomeCat = "Mota"
+                        });
                 });
 
             modelBuilder.Entity("GarageRev.Models.Reviews", b =>
@@ -488,6 +524,9 @@ namespace GarageRev.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("UtilizadorFK")
                         .HasColumnType("int");
 
@@ -497,7 +536,7 @@ namespace GarageRev.Data.Migrations
 
                     b.HasIndex("UtilizadorFK");
 
-                    b.ToTable("Reviews");
+                    b.ToTable("Reviews", (string)null);
                 });
 
             modelBuilder.Entity("GarageRev.Models.Utilizadores", b =>
@@ -508,14 +547,17 @@ namespace GarageRev.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("CarroFav")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CarroFavorito")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdUtilizador")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nacionalidade")
@@ -529,7 +571,9 @@ namespace GarageRev.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Utilizadores");
+                    b.HasIndex("CarroFavorito");
+
+                    b.ToTable("Utilizadores", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -557,6 +601,22 @@ namespace GarageRev.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "c",
+                            ConcurrencyStamp = "08a2e2fd-4d35-4229-a736-7761ec5e816d",
+                            Name = "Cliente",
+                            NormalizedName = "CLIENTE"
+                        },
+                        new
+                        {
+                            Id = "a",
+                            ConcurrencyStamp = "88d8cbce-6ff4-4dbb-abe3-2008efe13207",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -739,25 +799,14 @@ namespace GarageRev.Data.Migrations
                     b.HasOne("GarageRev.Models.Carros", null)
                         .WithMany()
                         .HasForeignKey("CarrosId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GarageRev.Models.Categorias", null)
                         .WithMany()
                         .HasForeignKey("CategoriasId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("GarageRev.Models.Fotografias", b =>
-                {
-                    b.HasOne("GarageRev.Models.Carros", "Carro")
-                        .WithMany("Fotografias")
-                        .HasForeignKey("CarroFK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Carro");
                 });
 
             modelBuilder.Entity("GarageRev.Models.Reviews", b =>
@@ -765,13 +814,13 @@ namespace GarageRev.Data.Migrations
                     b.HasOne("GarageRev.Models.Carros", "Carro")
                         .WithMany("Reviews")
                         .HasForeignKey("CarroFK")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GarageRev.Models.Utilizadores", "Utilizador")
                         .WithMany("Reviews")
                         .HasForeignKey("UtilizadorFK")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Carro");
@@ -779,12 +828,23 @@ namespace GarageRev.Data.Migrations
                     b.Navigation("Utilizador");
                 });
 
+            modelBuilder.Entity("GarageRev.Models.Utilizadores", b =>
+                {
+                    b.HasOne("GarageRev.Models.Carros", "Carros")
+                        .WithMany("Utilizadores")
+                        .HasForeignKey("CarroFavorito")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Carros");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -793,7 +853,7 @@ namespace GarageRev.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -802,7 +862,7 @@ namespace GarageRev.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -811,13 +871,13 @@ namespace GarageRev.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -826,15 +886,15 @@ namespace GarageRev.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("GarageRev.Models.Carros", b =>
                 {
-                    b.Navigation("Fotografias");
-
                     b.Navigation("Reviews");
+
+                    b.Navigation("Utilizadores");
                 });
 
             modelBuilder.Entity("GarageRev.Models.Utilizadores", b =>
