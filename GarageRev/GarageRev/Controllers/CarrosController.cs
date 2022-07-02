@@ -44,6 +44,8 @@ namespace GarageRev.Controllers
             }
 
             var carros = await _context.Carros
+                .Include(c => c.Categorias)
+                //.Include(f => f.Reviews)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (carros == null)
             {

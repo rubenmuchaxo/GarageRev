@@ -46,9 +46,9 @@ namespace GarageRev.Models
         /// Carro favorito do Utilizador
         /// </summary>
         [Display(Name = "Carro Favorito")]
-        [ForeignKey(nameof(Carro))]
+        [ForeignKey(nameof(Carros))]
         public int CarroFavorito { get; set; }
-        public Carros Carro { get; set; }
+        public Carros Carros { get; set; }
         public ICollection<Reviews> Reviews { get; set; }
     }
 }

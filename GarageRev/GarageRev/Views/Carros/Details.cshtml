@@ -10,20 +10,10 @@
 <div>
     <h4>Carros</h4>
     <hr />
-
-    @foreach(Fotografias foto in Model.Fotografias)
-    {
-        if(foto.CarroFK == Model.Id)
-        {
-            var caminho = foto.FotoPath;
-            <div class="Fotografias">
-                <img class="Fotos" src="~/Photos/@caminho" />
-
-            </div>
-
-        }
-    }
-
+    <div style="float:left; margin-right:20px;  margin-top:10px; border:4px solid black">
+        <img src="~/Photos/@Html.DisplayFor(model => model.Foto)"
+             width="200" />
+    </div>
 
 
     <dl class="row">

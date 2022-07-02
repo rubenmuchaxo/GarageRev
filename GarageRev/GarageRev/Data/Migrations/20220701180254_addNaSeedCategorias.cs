@@ -4,7 +4,7 @@
 
 namespace GarageRev.Data.Migrations
 {
-    public partial class teste : Migration
+    public partial class addNaSeedCategorias : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,31 +13,50 @@ namespace GarageRev.Data.Migrations
                 keyColumn: "Id",
                 keyValue: "a",
                 column: "ConcurrencyStamp",
-                value: "dffddd8c-882b-4f03-96f1-b55324064093");
+                value: "0a46d422-abd9-4d20-aef3-4f64972434c9");
 
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
                 keyValue: "c",
                 column: "ConcurrencyStamp",
-                value: "75cf5ff1-d3bc-4e46-a680-b89291e9a048");
+                value: "89379715-95c9-4b0b-81a7-2a9075804d7c");
+
+            migrationBuilder.InsertData(
+                table: "Categorias",
+                columns: new[] { "Id", "NomeCat" },
+                values: new object[,]
+                {
+                    { 4, "SUV" },
+                    { 5, "Mota" }
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DeleteData(
+                table: "Categorias",
+                keyColumn: "Id",
+                keyValue: 4);
+
+            migrationBuilder.DeleteData(
+                table: "Categorias",
+                keyColumn: "Id",
+                keyValue: 5);
+
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
                 keyValue: "a",
                 column: "ConcurrencyStamp",
-                value: "f7dae83d-0d6f-4874-9724-872f637d287b");
+                value: "ac754f69-cbd0-4dd7-892c-cc28aa0787b2");
 
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
                 keyValue: "c",
                 column: "ConcurrencyStamp",
-                value: "2aa22c5e-e9ab-4861-8f58-89caa7bf0848");
+                value: "07720fa9-ea18-4ecb-8ecf-b74fcc0ea521");
         }
     }
 }
