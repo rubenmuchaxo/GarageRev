@@ -50,7 +50,7 @@ namespace GarageRev.Controllers
 
             var carros = await _context.Carros
                 .Include(c => c.Categorias)
-                //.Include(f => f.Reviews)
+                .Include(f => f.Reviews)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (carros == null)
             {
@@ -67,25 +67,25 @@ namespace GarageRev.Controllers
         /// <param name="idCarro">Id do Carro respetivo à review</param>
         /// <param name="comentario"> conteudo da review</param>
         /// <returns></returns>
-        public async Task<IActionResult> ApresentaReview(int idCarro, string comentario)
+        [HttpPost]
+        public async Task<IActionResult> ApresentaReview(int Id, string comentario)
         {
             var utilizador = _context.Utilizadores.Where(u => u.IdUtilizador == _userManager.GetUserId(User)).FirstOrDefault();
-
             {
                 //variavel que contem os dados do carro, review e utilizador
                 var review = new Reviews
                 {
-                    CarroFK = idCarro,
+                    CarroFK = Id,
                     Comentario = comentario.Replace("\r\n", "<br />"),
                     Data = DateTime.Now,
-                    Utilizador = utilizador
+                   Utilizador = utilizador
                 };
                 //adiciona a review à Base de Dados
                 _context.Reviews.Add(review);
                 //Guarda as alterações na Base de Dados
                 await _context.SaveChangesAsync();
                 //redirecionar para a página de detalhes de carro
-                return RedirectToAction(nameof(Details), new { id = idCarro });
+                return RedirectToAction(nameof(Details), new { Id = Id });
             }
         }
 

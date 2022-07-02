@@ -20,7 +20,7 @@ namespace GarageRev.Controllers
         }
 
         // GET: Reviews
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
             var applicationDbContext = _context.Reviews.Include(r => r.Carro).Include(r => r.Utilizador);
             return View(await applicationDbContext.ToListAsync());

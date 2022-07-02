@@ -4,6 +4,7 @@ using GarageRev.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageRev.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220702111207_reviewsCarro")]
+    partial class reviewsCarro
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace GarageRev.Data.Migrations
 
                     b.HasIndex("CategoriasId");
 
-                    b.ToTable("CarrosCategorias", (string)null);
+                    b.ToTable("CarrosCategorias");
                 });
 
             modelBuilder.Entity("GarageRev.Models.Carros", b =>
@@ -83,7 +85,7 @@ namespace GarageRev.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Carros", (string)null);
+                    b.ToTable("Carros");
 
                     b.HasData(
                         new
@@ -218,7 +220,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 1499,
                             Combustivel = "Petrol",
-                            Foto = "bmw_f44 Serie2 gran Coupe_218i.jpg",
+                            Foto = "bmw_F44 Serie 2 gran Coupe_218i.jpg",
                             Marca = "BMW",
                             Modelo = "F44 serie 2 Gran Coupe",
                             Nportas = "4",
@@ -479,7 +481,7 @@ namespace GarageRev.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categorias", (string)null);
+                    b.ToTable("Categorias");
 
                     b.HasData(
                         new
@@ -536,7 +538,7 @@ namespace GarageRev.Data.Migrations
 
                     b.HasIndex("UtilizadorFK");
 
-                    b.ToTable("Reviews", (string)null);
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("GarageRev.Models.Utilizadores", b =>
@@ -573,7 +575,7 @@ namespace GarageRev.Data.Migrations
 
                     b.HasIndex("CarroFavorito");
 
-                    b.ToTable("Utilizadores", (string)null);
+                    b.ToTable("Utilizadores");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -606,14 +608,14 @@ namespace GarageRev.Data.Migrations
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "bb5458d1-13a7-4e3b-920d-3e1b9e3fbd69",
+                            ConcurrencyStamp = "d30e6aa5-d9ca-4499-9c1e-c31e57128da3",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         },
                         new
                         {
                             Id = "a",
-                            ConcurrencyStamp = "1f0dd35b-925f-4333-b2d0-65334dbbaaac",
+                            ConcurrencyStamp = "1ca84710-d2a9-4266-8939-8f72d73a0d70",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
