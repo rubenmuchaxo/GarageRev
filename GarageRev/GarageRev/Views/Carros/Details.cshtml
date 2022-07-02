@@ -72,7 +72,7 @@
             @Html.DisplayFor(model => model.Nportas)
         </dd>
     </dl><form asp-action="ApresentaReview">
-        <input disabled name="Id" value="@Model.Id" />
+        <input type=hidden name="Id" value="@Model.Id" />
         <span>Review:</span><br />
     
         <textarea required name="comentario" style="resize:none; width:900px; height:100px;"></textarea><br />
@@ -88,7 +88,7 @@
     <div style="border: 3px solid black; background-color: #ece3f7;
         padding-top: 2px; padding-right: 3px; padding-bottom: 5px; padding-left: 5px;">
 
-        <span style="font-weight:bold; font-size:medium;">  Carro: </span> @item.Carro.Id
+        <span style="font-weight:bold; font-size:medium;">  Email: </span> @item.Utilizador.Email
         <span style="font-weight:bold; font-size:medium">  Comentario: </span>@Html.Raw(item.Comentario) <br />
         <span style="font-weight:bold; font-size:medium">  Data: </span>@item.Data <br />
     </div>

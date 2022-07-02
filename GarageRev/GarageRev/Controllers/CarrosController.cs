@@ -69,12 +69,12 @@ namespace GarageRev.Controllers
         [HttpPost]
         public async Task<IActionResult> ApresentaReview(int Id, string comentario)
         {
-            var utilizador = new Utilizadores();
+            var utilizador = _context.Utilizadores.Where(u => u.IdUtilizador == _userManager.GetUserId(User)).FirstOrDefault();
             {
                 //variavel que contem os dados do carro, review e utilizador
                 var review = new Reviews
                 {
-                    CarroFK = 1,
+                    CarroFK = Id,
                     Comentario = comentario.Replace("\r\n", "<br />"),
                     Data = DateTime.Now,
                    Utilizador = utilizador
@@ -84,7 +84,7 @@ namespace GarageRev.Controllers
                 //Guarda as alterações na Base de Dados
                 await _context.SaveChangesAsync();
                 //redirecionar para a página de detalhes de carro
-                return RedirectToAction(nameof(Details), new { Id = 1 });
+                return RedirectToAction(nameof(Details), new { Id = Id });
             }
         }
 
