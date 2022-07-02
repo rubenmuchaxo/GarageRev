@@ -1,6 +1,7 @@
 ﻿using GarageRev.Data;
 using GarageRev.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ namespace GarageRev.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly UserManager<IdentityUser> userManager
 
 
         public CarrosController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
@@ -34,6 +36,20 @@ namespace GarageRev.Controllers
              */
             return View(await _context.Carros.ToListAsync());
         }
+
+        /// <summary>
+        /// Metodo para apresentar os comentarios feitos pelos utilizadores
+
+        /// <returns></returns>
+        
+
+
+
+
+
+
+
+
 
         // GET: Carros/Details/5
         public async Task<IActionResult> Details(int? id)
