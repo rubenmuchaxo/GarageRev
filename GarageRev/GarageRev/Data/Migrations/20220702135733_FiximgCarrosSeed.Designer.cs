@@ -4,6 +4,7 @@ using GarageRev.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageRev.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220702135733_FiximgCarrosSeed")]
+    partial class FiximgCarrosSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace GarageRev.Data.Migrations
 
                     b.HasIndex("CategoriasId");
 
-                    b.ToTable("CarrosCategorias", (string)null);
+                    b.ToTable("CarrosCategorias");
                 });
 
             modelBuilder.Entity("GarageRev.Models.Carros", b =>
@@ -83,7 +85,7 @@ namespace GarageRev.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Carros", (string)null);
+                    b.ToTable("Carros");
 
                     b.HasData(
                         new
@@ -479,7 +481,7 @@ namespace GarageRev.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categorias", (string)null);
+                    b.ToTable("Categorias");
 
                     b.HasData(
                         new
@@ -536,7 +538,7 @@ namespace GarageRev.Data.Migrations
 
                     b.HasIndex("UtilizadorFK");
 
-                    b.ToTable("Reviews", (string)null);
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("GarageRev.Models.Utilizadores", b =>
@@ -573,7 +575,7 @@ namespace GarageRev.Data.Migrations
 
                     b.HasIndex("CarroFavorito");
 
-                    b.ToTable("Utilizadores", (string)null);
+                    b.ToTable("Utilizadores");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

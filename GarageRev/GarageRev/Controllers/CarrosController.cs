@@ -1,7 +1,7 @@
 ﻿using GarageRev.Data;
 using GarageRev.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -100,7 +100,6 @@ namespace GarageRev.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
         public async Task<IActionResult> Create([Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas,Foto")] Carros carros, IFormFile fotografia, ICollection<String> ChoosenCategory)
         {
             ///process the image
@@ -113,11 +112,11 @@ namespace GarageRev.Controllers
             ///         -> define the name that the image must have
             ///         -> add the filename to vet data
             ///         -> save the file on the disk
-            
+
             //vai percorrer todas as strings category selecionadas na collection choosen category
             foreach (String category in ChoosenCategory)
             {
-                
+
                 //vai percorrer as categorias ja existentes
                 foreach (Categorias category2 in _context.Categorias)
                 {
@@ -225,12 +224,93 @@ namespace GarageRev.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas")] Carros carros)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas,Foto,Categorias")] Carros carros, IFormFile fotografia, ICollection<String> ChoosenCategory,Categorias categorias)
         {
             if (id != carros.Id)
             {
                 return NotFound();
             }
+
+
+            //Remove todas as categorias ja selecionadas
+
+
+            
+
+
+
+
+
+
+            // foreach adiciona as categorias selecionadas
+
+            //vai percorrer todas as strings category selecionadas na collection choosen category
+            foreach (String category in ChoosenCategory)
+            {
+
+                //vai percorrer as categorias ja existentes
+                foreach (Categorias category2 in _context.Categorias)
+                {
+                    //se a categoria selecionada ja existir na base de dados
+                    if (category2.NomeCat == category)
+                    {
+                        //adicionamos a categoria selecionada ao carro
+                        carros.Categorias.Add(category2);
+                    }
+                }
+            }
+
+
+            // avalia se o array com a lista de categorias escolhidas associadas ao anime está vazio ou não
+            if (ChoosenCategory.Count == 0)
+            {
+                ModelState.AddModelError("", "Please choose at least a category.");
+                return View(carros);
+            }
+
+
+
+            //se a foto nao for nula, realiza os processo
+            if (fotografia != null)
+            {
+                if (!(fotografia.ContentType == "image/jpeg" || fotografia.ContentType == "image/png" || fotografia.ContentType == "image/jpg"))
+                {
+                    //write the error message
+                    ModelState.AddModelError("", "Please choose a valid format(png/jpeg)");
+                    //resend Control to View, with data provided by user
+                    return View(carros);
+                }
+                else
+                {
+                    Guid g;
+                    g = Guid.NewGuid();
+                    string imageName = carros.Marca + "_" +carros.Modelo + "_"+carros.Versao + "_" + g.ToString();
+                    string extensionOfImage = Path.GetExtension(fotografia.FileName).ToLower();
+                    imageName += extensionOfImage;
+                    carros.Foto = imageName;
+                }
+
+                string addressToStoreFile = _webHostEnvironment.WebRootPath;
+                string newimglocation = Path.Combine(addressToStoreFile, "Photos", carros.Foto);
+
+                //save image file to disk
+                using var stream = new FileStream(newimglocation, FileMode.Create);
+                await fotografia.CopyToAsync(stream);
+
+
+
+
+            }
+            else
+            {
+                Carros carros1 = _context.Carros.Find(carros.Id);
+
+                _context.Entry<Carros>(carros1).State = EntityState.Detached;  
+
+
+                carros.Foto = carros1.Foto;
+            }
+
 
             if (ModelState.IsValid)
             {
