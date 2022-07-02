@@ -2,14 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading;
-using System.Threading.Tasks;
+using GarageRev.Data;
+using GarageRev.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -18,9 +12,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace GarageRev.Areas.Identity.Pages.Account
 {
+    [AllowAnonymous]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -30,19 +33,27 @@ namespace GarageRev.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
+        /// <summary>
+        /// referência à BD do nosso sistema
+        /// </summary>
+        private readonly ApplicationDbContext _context;
+
+
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _userStore = userStore;
-            _emailStore = GetEmailStore();
+            //_emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         /// <summary>
@@ -97,52 +108,223 @@ namespace GarageRev.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            /// <summary>
+            /// ligação entre os Utilizadores e a tabela de Autenticação
+            /// </summary>
+
+            public string IdUtilizador { get; set; }
+            /// <summary>
+            /// Nome do Utilizador
+            /// </summary>
+            [Required(ErrorMessage = "Este campo é obrigatório!")]
+             public string Nome { get; set; }
+            /// <summary>
+            /// Nacionalidade do Utilizador
+            /// </summary>
+            
+            public string Nacionalidade { get; set; }
+            /// <summary>
+            /// Idade do Utilizador
+            /// </summary>
+            [Display(Name = "Data de Nascimento")]
+            [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+            [DataType(DataType.Date)]
+            public DateTime DataNascimento { get; set; }
         }
 
 
-        public async Task OnGetAsync(string returnUrl = null)
+        //public async Task OnGetAsync(string returnUrl = null)
+        //{
+        //    ReturnUrl = returnUrl;
+        //    ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        //}
+
+        /// <summary>
+        /// Metodo a ser executado pela pagina, quando o HTTP é invocado em GET
+        /// </summary>
+        /// <param name="returnUrl"></param>
+
+        public void OnGet(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            //ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
+
+        //public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        //{
+        //    returnUrl ??= Url.Content("~/");
+        //    ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+        //    if (ModelState.IsValid)
+        //    {
+        //        var user = CreateUser();
+
+        //        await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+        //        await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+        //        var result = await _userManager.CreateAsync(user, Input.Password);
+
+        //        if (result.Succeeded)
+        //        {
+        //            _logger.LogInformation("User created a new account with password.");
+
+        //            var userId = await _userManager.GetUserIdAsync(user);
+        //            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        //            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+        //            var callbackUrl = Url.Page(
+        //                "/Account/ConfirmEmail",
+        //                pageHandler: null,
+        //                values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
+        //                protocol: Request.Scheme);
+
+        //            await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+        //                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+        //            if (_userManager.Options.SignIn.RequireConfirmedAccount)
+        //            {
+        //                return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+        //            }
+        //            else
+        //            {
+        //                await _signInManager.SignInAsync(user, isPersistent: false);
+        //                return LocalRedirect(returnUrl);
+        //            }
+        //        }
+        //        foreach (var error in result.Errors)
+        //        {
+        //            ModelState.AddModelError(string.Empty, error.Description);
+        //        }
+        //    }
+
+        //    // If we got this far, something failed, redisplay form
+        //    return Page();
+        //}
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+
             returnUrl ??= Url.Content("~/");
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            //ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = CreateUser();
+                var user = new IdentityUser
+                {
+                    UserName = Input.Email,
+                    Email = Input.Email
+                    
+                    //EmailConfirmed = true,
+                    //EmailConfirmed    = false // o email não está formalmente confirmado
+                    //LockoutEnabled = true,  // o utilizador pode ser bloqueado
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                    //DataRegisto = DateTime.Now // data do registo
+                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("O utilizador criou uma nova conta com password.");
 
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //await _userManager.AddToRoleAsync(user, "Cliente");
+
+
+
+                    //*************************************************************
+                    // Vamos proceder à operação de guardar os dados do Utilizador
+                    //*************************************************************
+                    // preparar os dados do Utilizador para serem adicionados à BD
+                    // atribuir ao objeto 'Utilizador' o email fornecido pelo utilizador,
+                    // a quando da escreita dos dados na interface
+                    // exatamente a mesma tarefa feita na linha 128
+
+                    // adicionar o LinkID do utilizador,
+                    // para formar uma 'ponte' (foreign key) entre
+                    // os dados da autenticação 
+
+
+                    // estamos em condições de guardar os dados na BD
+
+
+                    Utilizadores utilizador = new Utilizadores
+                    {
+                        Email = user.Email,
+                        IdUtilizador = user.Id,
+                        Nome = Input.Nome,
+                        Nacionalidade = Input.Nacionalidade,
+                        //DataNascimento = Input.DataNascimento
+                    };
+
+                    //Verifica se o email colocado é do gestor e se for coloca essa conta como gestor, caso contrário colocado a conta como cliente
+                    //if (Input.Email == "admin@ipt.pt")
+                    //{
+                    //    await _userManager.AddToRoleAsync(user, "Admin");
+                    //}
+                    //else
+                    //{
+                    //    await _userManager.AddToRoleAsync(user, "Cliente");
+                    //}
+
+                    try
+                    {
+                        //_context.Add(Input.Utilizador); // adicionar o Criador
+                        //await _context.SaveChangesAsync(); // 'commit' da adição
+                        // Enviar para o utilizador para a página de confirmação da criaçao de Registo
+                        //return RedirectToPage("RegisterConfirmation");
+
+                        await _context.AddAsync(utilizador);
+                        await _context.SaveChangesAsync(); // 'commit' da adição
+                        //await _signInManager.SignInAsync(user, isPersistent: false);
+                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        //return LocalRedirect(returnUrl);
+                        // Enviar para o utilizador para a página de confirmação da criaçao de Registo
+                        //return RedirectToPage("RegisterConfirmation");
+                    }
+                    catch (Exception)
+                    {
+                        // avisar que houve um erro
+
+                        ModelState.AddModelError("", "Ocorreu um erro na criação de dados");
+                        // deverá ser apagada o User q foi previamente criador
+                        //await _userManager.DeleteAsync(user);
+
+                        // devolver dados à pagina
+                        return Page();
+                    }
+
+
+
+
+                    /*var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
-                        values: new { area = "Identity", userId = userId, code = code, returnUrl = returnUrl },
+                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    // estamos em condições de guardar os dados na BD
 
-                    if (_userManager.Options.SignIn.RequireConfirmedAccount)
+
+                    User utilizador = new User
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        Email = user.Email,
+                        IdUserName = user.Id
+                    };
+
+                  
+
+                    try
+                    {
+
+
+                        await _context.AddAsync(utilizador);
+                        await _context.SaveChangesAsync(); // 'commit' da adição
+                                                           // Enviar para o utilizador para a página de confirmação da criaçao de Registo
+                        return RedirectToPage("RegisterConfirmation");
                     }
-                    else
+                    catch (Exception)
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
-                    }
+                    }*/
                 }
                 foreach (var error in result.Errors)
                 {
@@ -154,27 +336,29 @@ namespace GarageRev.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private IdentityUser CreateUser()
-        {
-            try
-            {
-                return Activator.CreateInstance<IdentityUser>();
-            }
-            catch
-            {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
-            }
-        }
 
-        private IUserEmailStore<IdentityUser> GetEmailStore()
-        {
-            if (!_userManager.SupportsUserEmail)
-            {
-                throw new NotSupportedException("The default UI requires a user store with email support.");
-            }
-            return (IUserEmailStore<IdentityUser>)_userStore;
-        }
+
+        //        private IdentityUser CreateUser()
+        //        {
+        //            try
+        //            {
+        //                return Activator.CreateInstance<IdentityUser>();
+        //            }
+        //            catch
+        //            {
+        //                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
+        //                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
+        //                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+        //            }
+        //        }
+
+        //        private IUserEmailStore<IdentityUser> GetEmailStore()
+        //        {
+        //            if (!_userManager.SupportsUserEmail)
+        //            {
+        //                throw new NotSupportedException("The default UI requires a user store with email support.");
+        //            }
+        //            return (IUserEmailStore<IdentityUser>)_userStore;
+        //        }
     }
 }

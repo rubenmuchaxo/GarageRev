@@ -48,13 +48,7 @@ namespace GarageRev.Models
         [DisplayFormat(DataFormatString="{0:yyyy-MM-dd}", ApplyFormatInEditMode=true)]
         [DataType(DataType.Date)]
         public DateTime DataNascimento{ get; set; }
-        /// <summary>
-        /// Carro favorito do Utilizador
-        /// </summary>
-        [Display(Name = "Carro Favorito")]
-        [ForeignKey(nameof(Carros))]
-        public int CarroFavorito { get; set; }
-        public Carros Carros { get; set; }
+
         public ICollection<Reviews> Reviews { get; set; }
     }
 }

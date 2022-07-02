@@ -4,22 +4,20 @@ using GarageRev.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace GarageRev.Data.Migrations
+namespace GarageRev.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220702100417_atributoDataReview_IdUtilizador")]
-    partial class atributoDataReview_IdUtilizador
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.4")
+                .HasAnnotation("ProductVersion", "6.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -220,7 +218,7 @@ namespace GarageRev.Data.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 1499,
                             Combustivel = "Petrol",
-                            Foto = "bmw_F44 Serie 2 gran Coupe_218i.jpg",
+                            Foto = "bmw_f44 Serie2 gran Coupe_218i.jpg",
                             Marca = "BMW",
                             Modelo = "F44 serie 2 Gran Coupe",
                             Nportas = "4",
@@ -549,9 +547,6 @@ namespace GarageRev.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CarroFavorito")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("datetime2");
 
@@ -572,8 +567,6 @@ namespace GarageRev.Data.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CarroFavorito");
 
                     b.ToTable("Utilizadores");
                 });
@@ -608,14 +601,14 @@ namespace GarageRev.Data.Migrations
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "dac58c5f-4bd0-450e-af20-964b58399e11",
+                            ConcurrencyStamp = "b41ec248-7506-44c3-8815-0e13c26f3d5c",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         },
                         new
                         {
                             Id = "a",
-                            ConcurrencyStamp = "fc2f4eee-0124-4b50-ac8b-c9feba6dc5ed",
+                            ConcurrencyStamp = "27b6a18a-9d60-42a3-8ec3-fb23f34e5383",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -830,17 +823,6 @@ namespace GarageRev.Data.Migrations
                     b.Navigation("Utilizador");
                 });
 
-            modelBuilder.Entity("GarageRev.Models.Utilizadores", b =>
-                {
-                    b.HasOne("GarageRev.Models.Carros", "Carros")
-                        .WithMany("Utilizadores")
-                        .HasForeignKey("CarroFavorito")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Carros");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -895,8 +877,6 @@ namespace GarageRev.Data.Migrations
             modelBuilder.Entity("GarageRev.Models.Carros", b =>
                 {
                     b.Navigation("Reviews");
-
-                    b.Navigation("Utilizadores");
                 });
 
             modelBuilder.Entity("GarageRev.Models.Utilizadores", b =>
