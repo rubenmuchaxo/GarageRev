@@ -1,4 +1,5 @@
-﻿@model GarageRev.Models.Carros
+﻿
+@model GarageRev.Models.Carros
 
 @{
     ViewData["Title"] = "Details";
@@ -9,6 +10,12 @@
 <div>
     <h4>Carros</h4>
     <hr />
+    <div style="float:left; margin-right:20px;  margin-top:10px; border:4px solid black">
+        <img src="~/Photos/@Html.DisplayFor(model => model.Foto)"
+             width="200" />
+    </div>
+
+
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Marca)
@@ -63,6 +70,8 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Nportas)
+        </dd>
+        
     </dl>
 </div>
 <div>

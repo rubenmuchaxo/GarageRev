@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageRev.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220630221742_fixmigracoes")]
-    partial class fixmigracoes
+    [Migration("20220701180254_addNaSeedCategorias")]
+    partial class addNaSeedCategorias
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -55,6 +55,9 @@ namespace GarageRev.Data.Migrations
 
                     b.Property<string>("Combustivel")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Foto")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Marca")
@@ -468,28 +471,17 @@ namespace GarageRev.Data.Migrations
                         {
                             Id = 3,
                             NomeCat = "Citadino"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            NomeCat = "SUV"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            NomeCat = "Mota"
                         });
-                });
-
-            modelBuilder.Entity("GarageRev.Models.Fotografias", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("CarroFK")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FotoPath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CarroFK");
-
-                    b.ToTable("Fotografias");
                 });
 
             modelBuilder.Entity("GarageRev.Models.Reviews", b =>
@@ -527,8 +519,8 @@ namespace GarageRev.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("CarroFav")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CarroFavorito")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("datetime2");
@@ -547,6 +539,8 @@ namespace GarageRev.Data.Migrations
                         .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CarroFavorito");
 
                     b.ToTable("Utilizadores");
                 });
@@ -581,14 +575,14 @@ namespace GarageRev.Data.Migrations
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "2aa22c5e-e9ab-4861-8f58-89caa7bf0848",
+                            ConcurrencyStamp = "89379715-95c9-4b0b-81a7-2a9075804d7c",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         },
                         new
                         {
                             Id = "a",
-                            ConcurrencyStamp = "f7dae83d-0d6f-4874-9724-872f637d287b",
+                            ConcurrencyStamp = "0a46d422-abd9-4d20-aef3-4f64972434c9",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -774,25 +768,14 @@ namespace GarageRev.Data.Migrations
                     b.HasOne("GarageRev.Models.Carros", null)
                         .WithMany()
                         .HasForeignKey("CarrosId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GarageRev.Models.Categorias", null)
                         .WithMany()
                         .HasForeignKey("CategoriasId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("GarageRev.Models.Fotografias", b =>
-                {
-                    b.HasOne("GarageRev.Models.Carros", "Carro")
-                        .WithMany("Fotografias")
-                        .HasForeignKey("CarroFK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Carro");
                 });
 
             modelBuilder.Entity("GarageRev.Models.Reviews", b =>
@@ -800,13 +783,13 @@ namespace GarageRev.Data.Migrations
                     b.HasOne("GarageRev.Models.Carros", "Carro")
                         .WithMany("Reviews")
                         .HasForeignKey("CarroFK")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("GarageRev.Models.Utilizadores", "Utilizador")
                         .WithMany("Reviews")
                         .HasForeignKey("UtilizadorFK")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Carro");
@@ -814,12 +797,23 @@ namespace GarageRev.Data.Migrations
                     b.Navigation("Utilizador");
                 });
 
+            modelBuilder.Entity("GarageRev.Models.Utilizadores", b =>
+                {
+                    b.HasOne("GarageRev.Models.Carros", "Carros")
+                        .WithMany("Utilizadores")
+                        .HasForeignKey("CarroFavorito")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Carros");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -828,7 +822,7 @@ namespace GarageRev.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -837,7 +831,7 @@ namespace GarageRev.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -846,13 +840,13 @@ namespace GarageRev.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -861,15 +855,15 @@ namespace GarageRev.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("GarageRev.Models.Carros", b =>
                 {
-                    b.Navigation("Fotografias");
-
                     b.Navigation("Reviews");
+
+                    b.Navigation("Utilizadores");
                 });
 
             modelBuilder.Entity("GarageRev.Models.Utilizadores", b =>

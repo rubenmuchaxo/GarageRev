@@ -10,7 +10,6 @@ namespace GarageRev.Models
 
         public Carros()
         {
-            Fotografias = new HashSet<Fotografias>();
             Categorias = new HashSet<Categorias>();
             Reviews = new HashSet<Reviews>();
             Utilizadores = new HashSet<Utilizadores>();
@@ -75,8 +74,9 @@ namespace GarageRev.Models
         /// <summary>
         /// Fotografias de cada carro
         /// </summary>
+        /// 
+        public string Foto { get; set; }
 
-        public ICollection<Fotografias> Fotografias { get; set; }
         public ICollection<Categorias> Categorias { get; set; }
         public ICollection<Reviews> Reviews { get; set; }
         public ICollection<Utilizadores> Utilizadores { get; set; }
