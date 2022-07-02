@@ -48,6 +48,7 @@ namespace GarageRev.Controllers
         }
 
         // GET: Reviews/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["CarroFK"] = new SelectList(_context.Carros, "Id", "Id");
@@ -75,6 +76,7 @@ namespace GarageRev.Controllers
         }
 
         // GET: Reviews/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -157,6 +159,7 @@ namespace GarageRev.Controllers
         }
 
         // GET: Reviews/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

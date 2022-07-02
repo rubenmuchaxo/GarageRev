@@ -88,6 +88,7 @@ namespace GarageRev.Controllers
                 return RedirectToAction(nameof(Details), new { Id = Id });
             }
         }
+        [Authorize]
         // GET: Carros/Create
         public IActionResult Create()
         {
@@ -202,6 +203,7 @@ namespace GarageRev.Controllers
         }
 
         // GET: Carros/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -254,6 +256,7 @@ namespace GarageRev.Controllers
         }
 
         // GET: Carros/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

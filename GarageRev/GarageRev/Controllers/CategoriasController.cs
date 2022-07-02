@@ -40,6 +40,7 @@ namespace GarageRev.Controllers
         }
 
         // GET: Categorias/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -62,6 +63,7 @@ namespace GarageRev.Controllers
         }
 
         // GET: Categorias/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -141,6 +143,7 @@ namespace GarageRev.Controllers
         }
 
         // GET: Categorias/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
