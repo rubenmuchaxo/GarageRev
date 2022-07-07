@@ -63,8 +63,15 @@
                 <input type="file" name="fotografia" class="form-control" accept=".jpg, .png, .webp" />
                 <span asp-validation-for="Foto" class="text-danger"></span>
             </div>
-                  
+
             <div class="form-group">
+                    <label class="control-label">Categorias</label>
+                    @foreach (Categorias item in ViewBag.ListaDeCategorias) {
+                        <br /> <input type="checkbox" value="@item.Id" name="CategoriaEscolhida" /> @item.NomeCat
+                    }
+                </div>
+                  
+            @*<div class="form-group">
                 <div style="border-top: 20px solid transparent;border-bottom: 5px solid transparent; width:625px">
               <div class="form-group col-sm-8">
                 <label>Categories</label>
@@ -87,7 +94,7 @@
                 </div>
               </div>
              </div>
-            </div>
+            </div>*@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

@@ -94,6 +94,8 @@ namespace GarageRev.Controllers
         // GET: Carros/Create
         public IActionResult Create()
         {
+            // lista de todas as categorias existentes
+            ViewBag.ListaDeCategorias = _context.Categorias.OrderBy(c => c.Id).ToList();
             return View();
         }
 
@@ -102,7 +104,7 @@ namespace GarageRev.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas,Foto")] Carros carros, IFormFile fotografia, ICollection<String> ChoosenCategory)
+        public async Task<IActionResult> Create([Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas,Foto")] Carros carros, IFormFile fotografia, int[] CategoriaEscolhida)
         {
             ///process the image
             ///if file is null
@@ -114,28 +116,56 @@ namespace GarageRev.Controllers
             ///         -> define the name that the image must have
             ///         -> add the filename to vet data
             ///         -> save the file on the disk
+            ///         
 
-            //vai percorrer todas as strings category selecionadas na collection choosen category
-            foreach (String category in ChoosenCategory)
+
+
+            // avalia se o array com a lista de categorias escolhidas associadas ao anume está vazio ou não
+            if (CategoriaEscolhida.Length == 0)
             {
-
-                //vai percorrer as categorias ja existentes
-                foreach (Categorias category2 in _context.Categorias)
-                {
-                    //se a categoria selecionada ja existir na base de dados
-                    if (category2.NomeCat == category)
-                    {
-                        //adicionamos a categoria selecionada ao carro
-                        carros.Categorias.Add(category2);
-                    }
-                }
-            }
-
-            if (ChoosenCategory.Count == 0)
-            {
-                ModelState.AddModelError("", "Please choose at least a category.");
+                //É gerada uma mensagem de erro
+                ModelState.AddModelError("", "É necessário selecionar pelo menos uma categoria.");
+                // gerar a lista Categorias que podem ser associadas ao anime
+                ViewBag.ListaDeCategorias = _context.Categorias.OrderBy(c => c.Id).ToList();
+                // devolver controlo à View
                 return View(carros);
             }
+
+            // criar uma lista com os objetos escolhidos das Categorias
+            List<Categorias> listaDeCategoriasEscolhidas = new List<Categorias>();
+            // Para cada objeto escolhido..
+            foreach (int item in CategoriaEscolhida)
+            {
+                //procurar a categoria
+                Categorias Categoria = _context.Categorias.Find(item);
+                // adicionar a Categoria à lista
+                listaDeCategoriasEscolhidas.Add(Categoria);
+            }
+
+            // adicionar a lista ao objeto de "Animes"
+            carros.Categorias = listaDeCategoriasEscolhidas;
+
+            ////vai percorrer todas as strings category selecionadas na collection choosen category
+            //foreach (String category in ChoosenCategory)
+            //{
+
+            //    //vai percorrer as categorias ja existentes
+            //    foreach (Categorias category2 in _context.Categorias)
+            //    {
+            //        //se a categoria selecionada ja existir na base de dados
+            //        if (category2.NomeCat == category)
+            //        {
+            //            //adicionamos a categoria selecionada ao carro
+            //            carros.Categorias.Add(category2);
+            //        }
+            //    }
+            //}
+
+            //if (ChoosenCategory.Count == 0)
+            //{
+            //    ModelState.AddModelError("", "Please choose at least a category.");
+            //    return View(carros);
+            //}
 
             if (fotografia == null)
             {
@@ -211,6 +241,8 @@ namespace GarageRev.Controllers
             {
                 return NotFound();
             }
+            // lista de todas as categorias existentes
+            ViewBag.ListaDeCategorias = _context.Categorias.OrderBy(c => c.Id).ToList();
 
             var carros = await _context.Carros.FindAsync(id);
             if (carros == null)
@@ -226,49 +258,74 @@ namespace GarageRev.Controllers
         [HttpPost]
         [Authorize(Roles ="Admin")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas,Foto,Categorias")] Carros carros, IFormFile fotografia, ICollection<String> ChoosenCategory,Categorias categorias)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas,Foto,Categorias")] Carros carros, IFormFile fotografia, int[] CategoriaEscolhida)
         {
             if (id != carros.Id)
             {
                 return NotFound();
             }
 
+            // avalia se o array com a lista de categorias escolhidas associadas ao carro está vazio ou não
+            if (CategoriaEscolhida.Length == 0)
+            {
+                //É gerada uma mensagem de erro
+                ModelState.AddModelError("", "É necessário selecionar pelo menos uma categoria.");
+                // gerar a lista Categorias que podem ser associadas ao carro
+                ViewBag.ListaDeCategorias = _context.Categorias.OrderBy(c => c.Id).ToList();
+                // devolver controlo à View
+                return View(carros);
+            }
+
+            // criar uma lista com os objetos escolhidos das Categorias
+            List<Categorias> listaDeCategoriasEscolhidas = new List<Categorias>();
+            // Para cada objeto escolhido..
+            foreach (int item in CategoriaEscolhida)
+            {
+                //procurar a categoria
+                Categorias Categoria = _context.Categorias.Find(item);
+                // adicionar a Categoria à lista
+                listaDeCategoriasEscolhidas.Add(Categoria);
+            }
+
+            // adicionar a lista ao objeto de "carros"
+            carros.Categorias = listaDeCategoriasEscolhidas;
 
             //Remove todas as categorias ja selecionadas
 
 
-            
 
 
 
 
 
 
-            // foreach adiciona as categorias selecionadas
 
-            //vai percorrer todas as strings category selecionadas na collection choosen category
-            foreach (String category in ChoosenCategory)
-            {
+            //// foreach adiciona as categorias selecionadas
 
-                //vai percorrer as categorias ja existentes
-                foreach (Categorias category2 in _context.Categorias)
-                {
-                    //se a categoria selecionada ja existir na base de dados
-                    if (category2.NomeCat == category)
-                    {
-                        //adicionamos a categoria selecionada ao carro
-                        carros.Categorias.Add(category2);
-                    }
-                }
-            }
+            ////vai percorrer todas as strings category selecionadas na collection choosen category
+            //foreach (String category in ChoosenCategory)
+            //{
+
+            //    //vai percorrer as categorias ja existentes
+            //    foreach (Categorias category2 in _context.Categorias)
+            //    {
+            //        //se a categoria selecionada ja existir na base de dados
+            //        if (category2.NomeCat == category)
+            //        {
+            //            //adicionamos a categoria selecionada ao carro
+            //            carros.Categorias.Add(category2);
+            //            _context.Update(categorias);
+            //        }
+            //    }
+            //}
 
 
-            // avalia se o array com a lista de categorias escolhidas associadas ao anime está vazio ou não
-            if (ChoosenCategory.Count == 0)
-            {
-                ModelState.AddModelError("", "Please choose at least a category.");
-                return View(carros);
-            }
+            //// avalia se o array com a lista de categorias escolhidas associadas ao anime está vazio ou não
+            //if (ChoosenCategory.Count == 0)
+            //{
+            //    ModelState.AddModelError("", "Please choose at least a category.");
+            //    return View(carros);
+            //}
 
 
 
