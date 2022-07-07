@@ -50,7 +50,7 @@ namespace GarageRev.Controllers
             }
 
             var carros = await _context.Carros
-                .Include(c => c.Categorias)
+                .Include(c => c.ListaCategorias)
                 .Include(f => f.Reviews)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (carros == null)
@@ -69,7 +69,7 @@ namespace GarageRev.Controllers
         /// <param name="comentario"> conteudo da review</param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> ApresentaReview(int Id, string comentario)
         {
             var utilizador = _context.Utilizadores.Where(u => u.IdUtilizador == _userManager.GetUserId(User)).FirstOrDefault();
@@ -90,12 +90,12 @@ namespace GarageRev.Controllers
                 return RedirectToAction(nameof(Details), new { Id = Id });
             }
         }
-        [Authorize]
+        //[Authorize]
         // GET: Carros/Create
         public IActionResult Create()
         {
             // lista de todas as categorias existentes
-            ViewBag.ListaDeCategorias = _context.Categorias.OrderBy(c => c.Id).ToList();
+            ViewBag.ListaCategorias = _context.Categorias.OrderBy(c => c.Id).ToList();
             return View();
         }
 
@@ -106,27 +106,13 @@ namespace GarageRev.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas,Foto")] Carros carros, IFormFile fotografia, int[] CategoriaEscolhida)
         {
-            ///process the image
-            ///if file is null
-            ///     -> add a predefined image to vet
-            ///else
-            ///     if file is not image
-            ///         -> send error message to user, asking for image
-            ///     else
-            ///         -> define the name that the image must have
-            ///         -> add the filename to vet data
-            ///         -> save the file on the disk
-            ///         
-
-
-
             // avalia se o array com a lista de categorias escolhidas associadas ao anume está vazio ou não
             if (CategoriaEscolhida.Length == 0)
             {
                 //É gerada uma mensagem de erro
                 ModelState.AddModelError("", "É necessário selecionar pelo menos uma categoria.");
                 // gerar a lista Categorias que podem ser associadas ao anime
-                ViewBag.ListaDeCategorias = _context.Categorias.OrderBy(c => c.Id).ToList();
+                ViewBag.ListaCategorias = _context.Categorias.OrderBy(c => c.Id).ToList();
                 // devolver controlo à View
                 return View(carros);
             }
@@ -143,7 +129,7 @@ namespace GarageRev.Controllers
             }
 
             // adicionar a lista ao objeto de "Animes"
-            carros.Categorias = listaDeCategoriasEscolhidas;
+            carros.ListaCategorias = listaDeCategoriasEscolhidas;
 
             ////vai percorrer todas as strings category selecionadas na collection choosen category
             //foreach (String category in ChoosenCategory)
@@ -234,7 +220,7 @@ namespace GarageRev.Controllers
         }
 
         // GET: Carros/Edit/5
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -242,7 +228,7 @@ namespace GarageRev.Controllers
                 return NotFound();
             }
             // lista de todas as categorias existentes
-            ViewBag.ListaDeCategorias = _context.Categorias.OrderBy(c => c.Id).ToList();
+            ViewBag.ListaCategorias = _context.Categorias.OrderBy(c => c.Id).ToList();
 
             var carros = await _context.Carros.FindAsync(id);
             if (carros == null)
@@ -256,7 +242,7 @@ namespace GarageRev.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize(Roles ="Admin")]
+        //[Authorize(Roles ="Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Marca,Modelo,Versao,Combustivel,Ano,CilindradaouCapacidadeBateria,Potencia,TipoCaixa,Nportas,Foto,Categorias")] Carros carros, IFormFile fotografia, int[] CategoriaEscolhida)
         {
@@ -271,7 +257,7 @@ namespace GarageRev.Controllers
                 //É gerada uma mensagem de erro
                 ModelState.AddModelError("", "É necessário selecionar pelo menos uma categoria.");
                 // gerar a lista Categorias que podem ser associadas ao carro
-                ViewBag.ListaDeCategorias = _context.Categorias.OrderBy(c => c.Id).ToList();
+                ViewBag.ListaCategorias = _context.Categorias.OrderBy(c => c.Id).ToList();
                 // devolver controlo à View
                 return View(carros);
             }
@@ -288,47 +274,7 @@ namespace GarageRev.Controllers
             }
 
             // adicionar a lista ao objeto de "carros"
-            carros.Categorias = listaDeCategoriasEscolhidas;
-
-            //Remove todas as categorias ja selecionadas
-
-
-
-
-
-
-
-
-
-            //// foreach adiciona as categorias selecionadas
-
-            ////vai percorrer todas as strings category selecionadas na collection choosen category
-            //foreach (String category in ChoosenCategory)
-            //{
-
-            //    //vai percorrer as categorias ja existentes
-            //    foreach (Categorias category2 in _context.Categorias)
-            //    {
-            //        //se a categoria selecionada ja existir na base de dados
-            //        if (category2.NomeCat == category)
-            //        {
-            //            //adicionamos a categoria selecionada ao carro
-            //            carros.Categorias.Add(category2);
-            //            _context.Update(categorias);
-            //        }
-            //    }
-            //}
-
-
-            //// avalia se o array com a lista de categorias escolhidas associadas ao anime está vazio ou não
-            //if (ChoosenCategory.Count == 0)
-            //{
-            //    ModelState.AddModelError("", "Please choose at least a category.");
-            //    return View(carros);
-            //}
-
-
-
+            carros.ListaCategorias = listaDeCategoriasEscolhidas;
             //se a foto nao for nula, realiza os processo
             if (fotografia != null)
             {
@@ -395,7 +341,7 @@ namespace GarageRev.Controllers
         }
 
         // GET: Carros/Delete/5
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -414,7 +360,7 @@ namespace GarageRev.Controllers
         }
 
         // POST: Carros/Delete/5
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -74,18 +74,18 @@
     </dl><form asp-action="ApresentaReview">
         <input type=hidden name="Id" value="@Model.Id" />
         <span>Review:</span><br />
-        @if (!User.Identity.IsAuthenticated)
+        @*@if (!User.Identity.IsAuthenticated)
         {
             <div width:36%">
             <textarea disabled style="resize:none; width:900px; height:100px;">Entre na conta de cliente para submeter uma review.</textarea><br />
             </div><br /><br />
         }
-        @if(User.Identity.IsAuthenticated){
+        @if(User.Identity.IsAuthenticated){*@
             <textarea required name="comentario" style="resize:none; width:900px; height:100px;"></textarea><br />
         <div style="float: right; width:36%">
             <input type="submit" value="Adicionar Review" class="btn btn-primary" />
             </div><br /><br />
-        }
+        @*}*@
         
     </form>
         
@@ -101,26 +101,26 @@
         <span style="font-weight:bold; font-size:medium">  Data: </span>@item.Data <br />
     </div>
             <br />
-            @if (User.Identity.IsAuthenticated)
-            {
+            @*@if (User.Identity.IsAuthenticated)
+            {*@
                 <div>
                     <button class="btn btn-primary" onclick="location.href = '@Url.Action("Edit", "Reviews", new { Id = item.Id })'">Editar</button>
         <button class="btn btn-primary" onclick="location.href = '@Url.Action("Delete", "Reviews", new { Id = item.Id })'">Eliminar</button>
     </div><br />
-    }
+    @*}*@
     }
    </div>
 
         <b>Categories: </b>
-        @foreach (var item in Model.Categorias) {
+        @foreach (var item in Model.ListaCategorias) {
                 <a asp-route-id="@item.Id" style="margin-right:5px;">@item.NomeCat</a>
         }
         
     </div>
  
 <div>
-    @if (User.Identity.IsAuthenticated) {
+    @*@if (User.Identity.IsAuthenticated) {*@
         <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-    }
+    @*}*@
     <a asp-action="Index">Voltar à pàgina anterior</a>
 </div>
