@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Delete";
+    string selecionado = "";
 }
 
 <h1>Delete</h1>
@@ -65,6 +66,18 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Nportas)
         </dd>
+        <dt class="col-sm-2">
+          <label class="control-label">Categorias</label>
+       </dt>
+       <dd>
+          @foreach (Categorias item in ViewBag.ListadeCategorias) {
+             if (Model.ListaCategorias.Contains(item)) { selecionado = "checked"; }
+
+             <br /> <input type="checkbox" value="@item.Id" name="CategoriaEscolhida" @selecionado disabled/> @item.NomeCat
+             selecionado = "";
+
+          }
+       </dd>
     </dl>
     
     <form asp-action="Delete">

@@ -5,7 +5,7 @@
 }
 
 <h1>Carros</h1>
-@if (User.Identity.IsAuthenticated) {
+@if (User.IsInRole("Admin")) {
     <p>
         <a asp-action="Create">Adicionar Novo Carro</a>
     </p>
@@ -76,7 +76,7 @@
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="@item.Id">Ver Detalhes</a>
-                @if (User.Identity.IsAuthenticated) {
+                @if (User.IsInRole("Admin")) {
                     <a asp-action="Edit" asp-route-id="@item.Id">| Editar </a>
                     <a asp-action = "Delete" asp-route-id = "@item.Id" >| Apagar </a>
                     }

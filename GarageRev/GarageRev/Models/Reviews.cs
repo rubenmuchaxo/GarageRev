@@ -1,13 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GarageRev.Models
-{
+namespace GarageRev.Models {
     /// <summary>
     /// Descrição de cada Review
     /// </summary>
-    public class Reviews
-    {
+    public class Reviews {
         /// <summary>
         /// Identificador da Review
         /// </summary>

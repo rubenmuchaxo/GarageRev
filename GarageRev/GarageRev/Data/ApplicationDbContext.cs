@@ -4,29 +4,25 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
-namespace GarageRev.Data
-{
-    public class ApplicationUser : IdentityUser
-    {
+namespace GarageRev.Data {
+    public class ApplicationUser : IdentityUser {
         [Required]
         public string Name { get; set; }
 
         public DateTime RegistrationDate { get; set; }
-        
-    }
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
-    {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+    }
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser> {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options) {
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+            optionsBuilder.EnableSensitiveDataLogging();
+        }
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
 
-            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-            {
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())) {
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
 
@@ -38,16 +34,16 @@ namespace GarageRev.Data
             // insert DB seed
 
             modelBuilder.Entity<Carros>().HasData(
-                new Carros { Id = 1, Marca = "BMW", Modelo = "i3", Versao = "120Ah", Combustivel = "Electric", Ano = 2017, CilindradaouCapacidadeBateria = 42, Potencia = 170, TipoCaixa = "1 speed Auto CVT", Nportas = "5",Foto="bmw_i3_120ah.jpg" },
+                new Carros { Id = 1, Marca = "BMW", Modelo = "i3", Versao = "120Ah", Combustivel = "Electric", Ano = 2017, CilindradaouCapacidadeBateria = 42, Potencia = 170, TipoCaixa = "1 speed Auto CVT", Nportas = "5", Foto = "bmw_i3_120ah.jpg" },
 
                 new Carros { Id = 2, Marca = "BMW", Modelo = "i3", Versao = "s 120Ah", Combustivel = "Electric", Ano = 2018, CilindradaouCapacidadeBateria = 42, Potencia = 184, TipoCaixa = "1 speed Auto CVT", Nportas = "5", Foto = "bmw_i3_s120ah.jpg" },
                 new Carros { Id = 3, Marca = "BMW", Modelo = "i4", Versao = "M50", Combustivel = "Electric", Ano = 2021, CilindradaouCapacidadeBateria = 84, Potencia = 544, TipoCaixa = "1 speed Auto CVT", Nportas = "5", Foto = "bmw_i4_M50.jpg" },
-                new Carros { Id = 4, Marca = "BMW", Modelo = "i4", Versao = "edrive40", Combustivel = "Electric", Ano = 2021, CilindradaouCapacidadeBateria = 84, Potencia = 340, TipoCaixa = "1 speed Auto CVT", Nportas = "5",  Foto = "BMW_i4_eDrive40.jpg" },
+                new Carros { Id = 4, Marca = "BMW", Modelo = "i4", Versao = "edrive40", Combustivel = "Electric", Ano = 2021, CilindradaouCapacidadeBateria = 84, Potencia = 340, TipoCaixa = "1 speed Auto CVT", Nportas = "5", Foto = "BMW_i4_eDrive40.jpg" },
                 new Carros { Id = 5, Marca = "BMW", Modelo = "F40 serie 1", Versao = "116i", Combustivel = "Petrol", Ano = 2020, CilindradaouCapacidadeBateria = 1499, Potencia = 109, TipoCaixa = "6 speed Manual", Nportas = "5", Foto = "bmw_F40 Serie 1_116i.jpg" },
                 new Carros { Id = 6, Marca = "BMW", Modelo = "F40 serie 1", Versao = "118i Auto", Combustivel = "Petrol", Ano = 2021, CilindradaouCapacidadeBateria = 1499, Potencia = 136, TipoCaixa = "7 speed DualClutch Automatic", Nportas = "5", Foto = "bmw_F40 Serie 1_118i.jpg" },
                 new Carros { Id = 7, Marca = "BMW", Modelo = "F40 serie 1", Versao = "128ti", Combustivel = "Petrol", Ano = 2020, CilindradaouCapacidadeBateria = 1998, Potencia = 265, TipoCaixa = "7 speed DualClutch Automatic", Nportas = "5", Foto = "bmw_F40 Serie 1_128i.jpg" },
-                new Carros { Id = 8, Marca = "BMW", Modelo = "F40 serie 1", Versao = "M135i xDrive", Combustivel = "Petrol", Ano = 2019, CilindradaouCapacidadeBateria = 1998, Potencia = 306, TipoCaixa = "8 speed Automatic", Nportas = "5" , Foto = "bmw_F40 Serie 1_m135i.jpg"},
-                new Carros { Id = 9, Marca = "BMW", Modelo = "G02 X4 LCI", Versao = "xDrive30i", Combustivel = "Petrol", Ano = 2021, CilindradaouCapacidadeBateria = 1998, Potencia = 245, TipoCaixa = "8 speed Automatic", Nportas = "5" , Foto = "bmw_G02_X4 LCI.jpg" },
+                new Carros { Id = 8, Marca = "BMW", Modelo = "F40 serie 1", Versao = "M135i xDrive", Combustivel = "Petrol", Ano = 2019, CilindradaouCapacidadeBateria = 1998, Potencia = 306, TipoCaixa = "8 speed Automatic", Nportas = "5", Foto = "bmw_F40 Serie 1_m135i.jpg" },
+                new Carros { Id = 9, Marca = "BMW", Modelo = "G02 X4 LCI", Versao = "xDrive30i", Combustivel = "Petrol", Ano = 2021, CilindradaouCapacidadeBateria = 1998, Potencia = 245, TipoCaixa = "8 speed Automatic", Nportas = "5", Foto = "bmw_G02_X4 LCI.jpg" },
                 new Carros { Id = 10, Marca = "BMW", Modelo = "F44 serie 2 Gran Coupe", Versao = "218i", Combustivel = "Petrol", Ano = 2021, CilindradaouCapacidadeBateria = 1499, Potencia = 136, TipoCaixa = "6 speed Manual", Nportas = "4", Foto = "bmw_f44 Serie2 gran Coupe_218i.jpg" },
                 new Carros { Id = 11, Marca = "BMW", Modelo = "G21 serie 3 Touring", Versao = "318i Auto", Combustivel = "Petrol", Ano = 2020, CilindradaouCapacidadeBateria = 1998, Potencia = 156, TipoCaixa = "8 speed Automatic", Nportas = "5", Foto = "bmw_g21 serie3 touring_318i auto.jpg" },
                 new Carros { Id = 12, Marca = "BMW", Modelo = "G23 serie 4 Cabrio", Versao = "430i", Combustivel = "Petrol", Ano = 2021, CilindradaouCapacidadeBateria = 1998, Potencia = 258, TipoCaixa = "8 speed Automatic", Nportas = "2", Foto = "bmw g23 serie 4 cabrio.jpg" },

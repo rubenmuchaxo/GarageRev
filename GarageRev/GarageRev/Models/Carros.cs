@@ -1,16 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GarageRev.Models
-{
+namespace GarageRev.Models {
     /// <summary>
     /// Descrição de cada Carro
     /// </summary>
-    public class Carros
-    {
+    public class Carros {
 
-        public Carros()
-        {
-            Categorias = new HashSet<Categorias>();
+        public Carros() {
+            ListaCategorias = new HashSet<Categorias>();
             Reviews = new HashSet<Reviews>();
         }
 
@@ -50,7 +47,7 @@ namespace GarageRev.Models
         /// Cilindrada, em cm3, de cada Carro ou bateria em kwh
         /// </summary>
         [Required]
-        [Display(Name = "Cilindrada/Bateria(cm3/kWh")]
+        [Display(Name = "Cilindrada/Bateria(cm3/kWh)")]
         public int CilindradaouCapacidadeBateria { get; set; }
         /// <summary>
         /// Potencia, em cv, de cada Carro
@@ -76,7 +73,7 @@ namespace GarageRev.Models
         /// 
         public string Foto { get; set; }
 
-        public ICollection<Categorias> Categorias { get; set; }
+        public ICollection<Categorias> ListaCategorias { get; set; }
         public ICollection<Reviews> Reviews { get; set; }
 
     }
