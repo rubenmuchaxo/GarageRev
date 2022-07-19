@@ -1,6 +1,6 @@
 ﻿using GarageRev.Data;
 using Microsoft.AspNetCore.Mvc;
-using GarageRev.Models
+using GarageRev.Models;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -12,8 +12,11 @@ namespace GarageRev.Controllers.Apicontroller {
     public class CarrosAPI : ControllerBase {
         private readonly ApplicationDbContext _context;
 
-        public CarrosAPI(ApplicationDbContext context) {
+        private readonly IWebHostEnvironment _caminho;
+
+        public CarrosAPI(ApplicationDbContext context, IWebHostEnvironment caminho) {
             _context = context;
+            _caminho = caminho;
         }
 
 
