@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Edit";
+    string selecionado = "";
 }
 
 <h1>Edit</h1>
@@ -65,28 +66,12 @@
             </div>
                   
             <div class="form-group">
-                <div style="border-top: 20px solid transparent;border-bottom: 5px solid transparent; width:625px">
-              <div class="form-group col-sm-8">
-                <label>Categories</label>
-                <label for="myMultiselect"></label>
-                <div id="myMultiselect" class="multiselect">
-                  <div id="mySelectLabel" class="selectBox" onclick="toggleCheckboxArea()">
-                    <select class="form-select">
-                      <option>somevalue</option>
-                    </select>
-                    <div class="overSelect"></div>
-                  </div>
-                  <div id="mySelectOptions">
-                    <label for="one"><input name="ChoosenCategory" type="checkbox" id="one" onchange="checkboxStatusChange()" value="Desportivo" />Desportivo</label>
-                    <label for="two"><input name="ChoosenCategory" type="checkbox" id="two" onchange="checkboxStatusChange()" value="Elétrico" />Elétrico</label>
-                    <label for="three"><input name="ChoosenCategory" type="checkbox" id="three" onchange="checkboxStatusChange()" value="Citadino" />Citadino</label>
-                    <label for="four"><input name="ChoosenCategory" type="checkbox" id="four" onchange="checkboxStatusChange()" value="SUV" />SUV</label>
-                    <label for="five"><input name="ChoosenCategory" type="checkbox" id="five" onchange="checkboxStatusChange()" value="Mota" />Mota</label>
-
-                  </div>
-                </div>
-              </div>
-             </div>
+                <label class="control-label">Categorias</label>
+                @foreach(Categorias item in ViewBag.ListadeCategorias) {
+                    if(Model.ListaCategorias.Contains(item)) { selecionado = "checked"; }
+                    <br /> <input type="checkbox" value="@item.Id" name="CategoriaEscolhida" @selecionado /> @item.NomeCat
+                    selecionado = "";
+                }
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

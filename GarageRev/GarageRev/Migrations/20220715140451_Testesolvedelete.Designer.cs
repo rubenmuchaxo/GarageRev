@@ -4,6 +4,7 @@ using GarageRev.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GarageRev.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220715140451_Testesolvedelete")]
+    partial class Testesolvedelete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,7 +150,7 @@ namespace GarageRev.Migrations
                             Ano = 2020,
                             CilindradaouCapacidadeBateria = 1499,
                             Combustivel = "Petrol",
-                            Foto = "bmw_F40_Serie1_116i.jpg",
+                            Foto = "bmw_F40 Serie 1_116i.jpg",
                             Marca = "BMW",
                             Modelo = "F40 serie 1",
                             Nportas = "5",
@@ -162,7 +164,7 @@ namespace GarageRev.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 1499,
                             Combustivel = "Petrol",
-                            Foto = "bmw_F40_Serie1_118i.jpg",
+                            Foto = "bmw_F40 Serie 1_118i.jpg",
                             Marca = "BMW",
                             Modelo = "F40 serie 1",
                             Nportas = "5",
@@ -176,7 +178,7 @@ namespace GarageRev.Migrations
                             Ano = 2020,
                             CilindradaouCapacidadeBateria = 1998,
                             Combustivel = "Petrol",
-                            Foto = "bmw_F40_Serie1_128i.jpg",
+                            Foto = "bmw_F40 Serie 1_128i.jpg",
                             Marca = "BMW",
                             Modelo = "F40 serie 1",
                             Nportas = "5",
@@ -190,7 +192,7 @@ namespace GarageRev.Migrations
                             Ano = 2019,
                             CilindradaouCapacidadeBateria = 1998,
                             Combustivel = "Petrol",
-                            Foto = "bmw_F40_Serie1_m135i.jpg",
+                            Foto = "bmw_F40 Serie 1_m135i.jpg",
                             Marca = "BMW",
                             Modelo = "F40 serie 1",
                             Nportas = "5",
@@ -204,7 +206,7 @@ namespace GarageRev.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 1998,
                             Combustivel = "Petrol",
-                            Foto = "bmw_G02_X4_LCI.jpg",
+                            Foto = "bmw_G02_X4 LCI.jpg",
                             Marca = "BMW",
                             Modelo = "G02 X4 LCI",
                             Nportas = "5",
@@ -218,7 +220,7 @@ namespace GarageRev.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 1499,
                             Combustivel = "Petrol",
-                            Foto = "bmw_f44_Serie2_gran_Coupe_218i.jpg",
+                            Foto = "bmw_f44 Serie2 gran Coupe_218i.jpg",
                             Marca = "BMW",
                             Modelo = "F44 serie 2 Gran Coupe",
                             Nportas = "4",
@@ -232,7 +234,7 @@ namespace GarageRev.Migrations
                             Ano = 2020,
                             CilindradaouCapacidadeBateria = 1998,
                             Combustivel = "Petrol",
-                            Foto = "bmw_g21_serie3_touring_318i_auto.jpg",
+                            Foto = "bmw_g21 serie3 touring_318i auto.jpg",
                             Marca = "BMW",
                             Modelo = "G21 serie 3 Touring",
                             Nportas = "5",
@@ -246,7 +248,7 @@ namespace GarageRev.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 1998,
                             Combustivel = "Petrol",
-                            Foto = "bmw_g23_serie4_cabrio.jpg",
+                            Foto = "bmw g23 serie 4 cabrio.jpg",
                             Marca = "BMW",
                             Modelo = "G23 serie 4 Cabrio",
                             Nportas = "2",
@@ -316,7 +318,7 @@ namespace GarageRev.Migrations
                             Ano = 2019,
                             CilindradaouCapacidadeBateria = 999,
                             Combustivel = "Petrol",
-                            Foto = "nissan_micra_k14.jpg",
+                            Foto = "nissan_micra k14.jpg",
                             Marca = "Nissan",
                             Modelo = "Micra K14  ",
                             Nportas = "5",
@@ -414,7 +416,7 @@ namespace GarageRev.Migrations
                             Ano = 2021,
                             CilindradaouCapacidadeBateria = 1499,
                             Combustivel = "Diesel",
-                            Foto = "peugeot_508_II_sw.jpg",
+                            Foto = "peugeot_508 II sw.jpg",
                             Marca = "Peugeot",
                             Modelo = "508 II SW",
                             Nportas = "5",
@@ -442,7 +444,7 @@ namespace GarageRev.Migrations
                             Ano = 2019,
                             CilindradaouCapacidadeBateria = 1461,
                             Combustivel = "Diesel",
-                            Foto = "renault_clio_5.jpg",
+                            Foto = "renault_clio 5.jpg",
                             Marca = "Renault",
                             Modelo = "Clio 5",
                             Nportas = "5",
@@ -601,14 +603,14 @@ namespace GarageRev.Migrations
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "ae1018fb-4c6f-413c-a7ea-fb076c7db515",
+                            ConcurrencyStamp = "008f87d1-a20f-42b2-aa4a-afe1e6370f9f",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         },
                         new
                         {
                             Id = "a",
-                            ConcurrencyStamp = "ba896104-9c30-46de-a399-06b6b7317977",
+                            ConcurrencyStamp = "f20021fd-fcc3-4e35-b88a-23e88dcbeb1a",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

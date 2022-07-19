@@ -1,15 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace GarageRev.Models
-{
+namespace GarageRev.Models {
     /// <summary>
     /// Descrição de cada Utilizador
     /// </summary>
-    public class Utilizadores
-    {
-        public Utilizadores()
-        {
+    public class Utilizadores {
+        public Utilizadores() {
             Reviews = new HashSet<Reviews>();
         }
         /// <summary>
@@ -45,9 +42,9 @@ namespace GarageRev.Models
         /// Idade do Utilizador
         /// </summary>
         [Display(Name = "Data de Nascimento")]
-        [DisplayFormat(DataFormatString="{0:yyyy-MM-dd}", ApplyFormatInEditMode=true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
-        public DateTime DataNascimento{ get; set; }
+        public DateTime DataNascimento { get; set; }
 
         public ICollection<Reviews> Reviews { get; set; }
     }

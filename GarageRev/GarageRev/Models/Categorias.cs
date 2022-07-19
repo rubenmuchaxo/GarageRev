@@ -1,13 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
-namespace GarageRev.Models
-{
+namespace GarageRev.Models {
     /// <summary>
     /// Descrição de cada Categoria
     /// </summary>
-    public class Categorias
-    {
-        public Categorias()
-        {
+    public class Categorias {
+        public Categorias() {
             Carros = new HashSet<Carros>();
         }
         /// <summary>

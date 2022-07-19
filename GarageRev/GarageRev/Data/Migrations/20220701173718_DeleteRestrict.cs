@@ -2,12 +2,9 @@
 
 #nullable disable
 
-namespace GarageRev.Data.Migrations
-{
-    public partial class DeleteRestrict : Migration
-    {
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+namespace GarageRev.Data.Migrations {
+    public partial class DeleteRestrict : Migration {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropForeignKey(
                 name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                 table: "AspNetRoleClaims");
@@ -155,8 +152,7 @@ namespace GarageRev.Data.Migrations
                 onDelete: ReferentialAction.Restrict);
         }
 
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropForeignKey(
                 name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                 table: "AspNetRoleClaims");
