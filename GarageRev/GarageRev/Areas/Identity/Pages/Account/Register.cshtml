@@ -1,15 +1,13 @@
 ﻿@page
 @model RegisterModel
-@{
-    ViewData["Title"] = "Register";
-}
 
-<h1>@ViewData["Title"]</h1>
+
+<h1>Registar</h1>
 
 <div class="row">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Create a new account.</h2>
+            <h2>Criar uma conta nova</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
@@ -37,7 +35,7 @@
                 <label asp-for="Input.Nacionalidade"></label>
                 <span asp-validation-for="Input.Nacionalidade" class="text-danger"></span>
             </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registar</button>
         </form>
     </div>
     

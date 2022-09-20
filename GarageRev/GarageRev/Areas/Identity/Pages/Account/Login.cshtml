@@ -1,17 +1,12 @@
 ﻿@page
 @model LoginModel
 
-@{
-    ViewData["Title"] = "Log in";
-}
 
-<h1>@ViewData["Title"]</h1>
+<h1>Iniciar Sessão</h1>
 <div class="row">
     <div class="col-md-4">
         <section>
             <form id="account" method="post">
-                <h2>Use a local account to log in.</h2>
-                <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-floating">
                     <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
@@ -32,17 +27,12 @@
                     </div>
                 </div>
                 <div>
-                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Iniciar Sessão</button>
                 </div>
                 <div>
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Esqueceu da sua palavra-passe?</a>
-                    </p>
+                    <br />
                     <p>
                         <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Registar</a>
-                    </p>
-                    <p>
-                        <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Reenviar confirmação por email</a>
                     </p>
                 </div>
             </form>
