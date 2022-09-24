@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GarageRev.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Linq;
 
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -23,7 +24,7 @@ namespace GarageRev.Controllers.Apicontroller {
 
         // GET: api/<CarrosAPI>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ApiViewModel>>> GetAllCarros() {
+        public async Task<ActionResult<IEnumerable<ApiViewModel>>> GetACarro() {
             //busca aos carros da db os dados para criar um API ViewMODEL,
             return await _context.Carros.Select(x => new ApiViewModel {
                 IdCarro = x.Id,
@@ -38,7 +39,7 @@ namespace GarageRev.Controllers.Apicontroller {
                 TipoCaixa = x.TipoCaixa,
                 Versao = x.Versao
             })
-                                        .OrderBy(x => x.Marca)
+                                        .OrderBy(x => x.IdCarro)
                                         .ToListAsync();
 
         }
@@ -56,6 +57,29 @@ namespace GarageRev.Controllers.Apicontroller {
             return car;
             
         }
+        // PUT api/<CarrosAPI>/5
+        [HttpPut("{id}")]
+        public async Task<ActionResult> PutCarro(int id, Carros car) {
+            if (id != car.Id) {
+                return BadRequest();
+            }
+            _context.Entry(car).State = EntityState.Modified;
+
+
+            try {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException) {
+                if (!CarroExists(id)) {
+                    return NotFound();
+                }
+                else {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
 
         // POST api/<CarrosAPI>
         //Publicar um carro? um create?de certa forma...
@@ -63,7 +87,12 @@ namespace GarageRev.Controllers.Apicontroller {
         public async Task<ActionResult<Carros>> PostCarro([FromForm] Carros car, IFormFile newfoto) {
             // sem a anotação [FromForm] o ASP .NET não sabe ler os dados
             // que lhe estão a ser enviados
-            car.Foto = "noCar.png";
+            car.Foto = "";
+            string localizacao = _caminho.WebRootPath;
+            var nomeFoto = Path.Combine(localizacao, "fotos", newfoto.FileName);
+            var fotoUp = new FileStream(nomeFoto, FileMode.Create);
+            await newfoto.CopyToAsync(fotoUp);
+            car.Foto = newfoto.FileName;
             try {
                 _context.Carros.Add(car);
                 await _context.SaveChangesAsync();
@@ -76,28 +105,7 @@ namespace GarageRev.Controllers.Apicontroller {
 
         }
 
-        // PUT api/<CarrosAPI>/5
-        [HttpPut("{id}")]
-        public async Task<ActionResult> PutCarro(int id, Carros car) {
-            if (id != car.Id) {
-                return BadRequest();
-            }
-            _context.Entry(car).State = EntityState.Modified;
-
-
-            try {
-                await _context.SaveChangesAsync();
-            } catch (DbUpdateConcurrencyException) {
-                if (!CarroExists(id)) {
-                    return NotFound();
-                }
-                else {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
+        
 
         // DELETE api/<CarrosAPI>/5
         [HttpDelete("{id}")]

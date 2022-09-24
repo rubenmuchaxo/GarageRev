@@ -346,8 +346,27 @@ namespace GarageRev.Controllers {
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id) {
-            var carros = await _context.Carros.FindAsync(id);
-            _context.Carros.Remove(carros);
+            //obtem o carro a ser apagado
+            var carro = await _context.Carros
+                                      .Where(c => c.Id == id)
+                                      .Include(c => c.ListaCategorias)
+                                      .FirstOrDefaultAsync();
+            //obtem a lista de Categorias a remover do carro a ser apagado
+            var ListadeCategorias = carro.ListaCategorias
+                                            .Select(c => c.Id)
+                                            .ToList();
+            //valida se a lista está vazia
+            if (ListadeCategorias.Any()) {
+                //percorre o id de cada cat 1 a 1 na lista
+                foreach (int cat in ListadeCategorias) {
+                    //encontra a categoria a remover pelo id
+                    var catToRemove = _context.Categorias.FirstOrDefault(c => c.Id == cat);
+                    //remove
+                    carro.ListaCategorias.Remove(catToRemove);
+
+                }
+            }
+            _context.Carros.Remove(carro);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
