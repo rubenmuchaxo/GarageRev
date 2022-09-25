@@ -6,7 +6,7 @@
         /// <summary>
         /// Identificador de cada Carro
         /// </summary>
-        public int IdCarro { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// Marca de cada carro
         /// </summary>

@@ -24,10 +24,10 @@ namespace GarageRev.Controllers.Apicontroller {
 
         // GET: api/<CarrosAPI>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ApiViewModel>>> GetACarro() {
+        public async Task<ActionResult<IEnumerable<ApiViewModel>>> GetCarros() {
             //busca aos carros da db os dados para criar um API ViewMODEL,
             return await _context.Carros.Select(x => new ApiViewModel {
-                IdCarro = x.Id,
+                Id = x.Id,
                 Ano = x.Ano,
                 CilindradaouCapacidadeBateria = x.CilindradaouCapacidadeBateria,
                 Combustivel = x.Combustivel,
@@ -37,16 +37,15 @@ namespace GarageRev.Controllers.Apicontroller {
                 Nportas = x.Nportas,
                 Potencia = x.Potencia,
                 TipoCaixa = x.TipoCaixa,
-                Versao = x.Versao
-            })
-                                        .OrderBy(x => x.IdCarro)
+                Versao = x.Versao})
+                                        .OrderBy(x => x.Id)
                                         .ToListAsync();
 
         }
 
         // GET api/<CarrosAPI>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Carros>> GetACarro(int id) {
+        public async Task<ActionResult<Carros>> GetCarros(int id) {
             // car vai ser o carro cujo id seja igual ao do httpget
             var car = await _context.Carros.FindAsync(id);
             //se car for null da not found
@@ -89,7 +88,7 @@ namespace GarageRev.Controllers.Apicontroller {
             // que lhe estão a ser enviados
             car.Foto = "";
             string localizacao = _caminho.WebRootPath;
-            var nomeFoto = Path.Combine(localizacao, "fotos", newfoto.FileName);
+            var nomeFoto = Path.Combine(localizacao, "Photos", newfoto.FileName);
             var fotoUp = new FileStream(nomeFoto, FileMode.Create);
             await newfoto.CopyToAsync(fotoUp);
             car.Foto = newfoto.FileName;
@@ -101,7 +100,7 @@ namespace GarageRev.Controllers.Apicontroller {
                 throw;
             }
 
-            return CreatedAtAction("GetACarro", new {id = car.Id }, car);
+            return CreatedAtAction("GetCarros", new {id = car.Id }, car);
 
         }
 
